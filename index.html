@@ -3,137 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Handcrafted by Sneha | Jewellery</title>
+<title>Hamsadhwani | Handmade jewellery by Sneha</title>
+<meta name="description" content="Handmade earrings and keychains inspired by Khajuraho temples, lotus ponds, brass and pearls. Each piece is made by hand.">
+<script>document.documentElement.className+=" js";</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
-<svg style="display:none" aria-hidden="true">
-  <defs>
-    <symbol id="sym-lotus" viewBox="0 0 64 64">
-      <g fill="currentColor">
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z"/>
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z" transform="rotate(45 32 32)"/>
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z" transform="rotate(90 32 32)"/>
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z" transform="rotate(135 32 32)"/>
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z" transform="rotate(180 32 32)"/>
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z" transform="rotate(225 32 32)"/>
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z" transform="rotate(270 32 32)"/>
-        <path d="M32 32 C26 22 26 10 32 2 C38 10 38 22 32 32 Z" transform="rotate(315 32 32)"/>
-        <circle cx="32" cy="32" r="4"/>
-      </g>
-    </symbol>
-    <symbol id="sym-medallion" viewBox="0 0 80 80">
-      <g fill="none" stroke="currentColor" stroke-width="1.4">
-        <circle cx="40" cy="40" r="37"/>
-        <circle cx="40" cy="40" r="30"/>
-      </g>
-      <use href="#sym-lotus" x="8" y="8" width="64" height="64"/>
-    </symbol>
-    <symbol id="sym-swan" viewBox="0 0 80 70">
-      <path fill="currentColor" d="M10 60 C10 45 25 40 35 42 C30 30 35 15 50 10 C47 16 48 22 52 26 C56 22 62 20 68 22 C62 24 58 28 57 34 C62 36 66 42 66 50 C66 58 58 62 48 60 C40 58 34 60 28 60 C22 60 14 62 10 60 Z"/>
-    </symbol>
-    <symbol id="sym-mandala" viewBox="0 0 60 60">
-      <g fill="none" stroke="currentColor" stroke-width="1.1">
-        <circle cx="30" cy="30" r="26"/>
-        <circle cx="30" cy="30" r="18"/>
-        <circle cx="30" cy="30" r="4"/>
-      </g>
-      <g fill="currentColor">
-        <path d="M30 4 L33 14 L27 14 Z"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(30 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(60 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(90 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(120 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(150 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(180 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(210 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(240 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(270 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(300 30 30)"/>
-        <path d="M30 4 L33 14 L27 14 Z" transform="rotate(330 30 30)"/>
-      </g>
-    </symbol>
-    <symbol id="sym-rabab" viewBox="0 0 40 70">
-      <g fill="none" stroke="currentColor" stroke-width="2">
-        <ellipse cx="20" cy="52" rx="14" ry="16"/>
-        <line x1="20" y1="36" x2="20" y2="4"/>
-        <ellipse cx="20" cy="4" rx="5" ry="3"/>
-        <line x1="14" y1="36" x2="14" y2="68"/>
-        <line x1="20" y1="36" x2="20" y2="68"/>
-        <line x1="26" y1="36" x2="26" y2="68"/>
-      </g>
-    </symbol>
-  </defs>
-</svg>
+<div class="announce" id="announce" aria-live="polite">
+  <span class="on">Made by hand, one piece at a time</span>
+  <span>Every piece is slightly different</span>
+  <span>Full refund if your order cannot be delivered</span>
+</div>
 
-<header class="site">
-  <a class="brand" href="index.html">
-    <svg class="lotus-mark" width="22" height="22" viewBox="0 0 64 64" style="color:var(--brass)"><use href="#sym-lotus"></use></svg>Handcrafted by Sneha<span>earrings &middot; keychains</span>
-  </a>
-  <button class="cart-btn" id="cartBtn">
-    🛍️ Cart <span class="cart-badge" id="cartBadge">0</span>
-  </button>
+<header class="site-header" id="siteHeader">
+  <div class="header-in">
+    <nav class="nav" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#collections">Collections</a>
+      <a href="#craft">Our craft</a>
+      <a href="#policy">Policies</a>
+    </nav>
+    <a class="wordmark" href="#top" aria-label="Hamsadhwani">
+      <span data-art="mark"></span>
+      <b>Hamsadhwani</b>
+      <small>हंसध्वनि</small>
+    </a>
+    <div class="header-r">
+      <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-word">Cart</span>
+        <span class="badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
 </header>
 
-<section class="hero">
-  <h1>Made by hand, piece by piece</h1>
-  <p>Every earring and keychain here is handmade, so small batches and slightly delayed delivery are part of the process. If a piece can't be delivered, you get a full refund — no questions asked.</p>
-  <svg class="pearl-string" width="200" height="14" viewBox="0 0 200 14" aria-hidden="true">
-    <g fill="var(--brass-light)">
-      <circle cx="10" cy="7" r="4.5"/><circle cx="32" cy="7" r="4.5"/><circle cx="54" cy="7" r="4.5"/>
-      <circle cx="76" cy="7" r="4.5"/><circle cx="98" cy="7" r="4.5"/><circle cx="120" cy="7" r="4.5"/>
-      <circle cx="142" cy="7" r="4.5"/><circle cx="164" cy="7" r="4.5"/><circle cx="186" cy="7" r="4.5"/>
-    </g>
-  </svg>
-</section>
+<main id="top">
+  <section class="hero">
+    <div class="hero-petals" id="petals" aria-hidden="true"></div>
+    <div class="hero-in" id="heroIn">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Handmade jewellery · Earrings and keychains</p>
+        <h1 class="reveal" style="--i:1">Old temple <em>motifs</em>, shaped by hand.</h1>
+        <p class="lead reveal" style="--i:2">Lotus, swan and pearl. Small pieces inspired by Khajuraho stonework, palace arches and antique brass, made one at a time.</p>
+        <div class="hero-cta reveal" style="--i:3">
+          <a class="btn solid" href="#shop">Shop the collection</a>
+          <a class="btn ghost" href="#craft">Our craft</a>
+        </div>
+        <div class="hero-facts reveal" style="--i:4">
+          <div>Handmade</div>
+          <div>Each piece unique</div>
+          <div>Pay by UPI</div>
+        </div>
+      </div>
+      <div class="hero-art reveal" style="--i:2" data-art="hero"></div>
+    </div>
+  </section>
 
-<div class="hero-ornament" aria-hidden="true">
-  <svg class="swan-left" width="64" height="54" viewBox="0 0 80 70" style="color:var(--maroon)"><use href="#sym-swan"></use></svg>
-  <svg class="lotus-medallion" width="64" height="64" viewBox="0 0 80 80" style="color:var(--brass)"><use href="#sym-medallion"></use></svg>
-  <svg class="swan-right" width="64" height="54" viewBox="0 0 80 70" style="color:var(--maroon)"><use href="#sym-swan"></use></svg>
-</div>
+  <div class="skyline" data-art="skyline" aria-hidden="true"></div>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
 
-<div class="divider-strip" aria-hidden="true">
-  <svg class="paisley-line" viewBox="0 0 160 14" preserveAspectRatio="none">
-    <defs><pattern id="paisleyPatL" width="20" height="14" patternUnits="userSpaceOnUse">
-      <path d="M10 2 C14 2 14 8 10 10 C6 12 4 10 4 7 C4 4 6 2 10 2 Z" fill="none" stroke="#b8862f"></path>
-    </pattern></defs>
-    <rect width="160" height="14" fill="url(#paisleyPatL)"></rect>
-  </svg>
-  <svg class="mandala" width="30" height="30" viewBox="0 0 60 60" style="color:var(--brass)"><use href="#sym-mandala"></use></svg>
-  <svg class="paisley-line" viewBox="0 0 160 14" preserveAspectRatio="none">
-    <defs><pattern id="paisleyPatR" width="20" height="14" patternUnits="userSpaceOnUse">
-      <path d="M10 2 C14 2 14 8 10 10 C6 12 4 10 4 7 C4 4 6 2 10 2 Z" fill="none" stroke="#b8862f"></path>
-    </pattern></defs>
-    <rect width="160" height="14" fill="url(#paisleyPatR)"></rect>
-  </svg>
-</div>
+  <section class="section" id="collections">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="divider" data-art="divider"></div>
+        <h2>Shop by collection</h2>
+        <p>Two small collections, both made by hand.</p>
+      </div>
+      <div class="tiles">
+        <button class="tile reveal" data-cat-link="earrings" aria-label="Shop earrings">
+          <span data-art="tileEarrings"></span>
+          <div class="tile-label"><h3>Earrings</h3><span>Explore</span></div>
+        </button>
+        <button class="tile reveal" style="--i:2" data-cat-link="keychains" aria-label="Shop keychains">
+          <span data-art="tileKeychains"></span>
+          <div class="tile-label"><h3>Keychains</h3><span>Explore</span></div>
+        </button>
+      </div>
+    </div>
+  </section>
 
-<div class="tabs" id="tabs">
-  <button class="tab active" data-cat="all">All</button>
-  <button class="tab" data-cat="earrings">Earrings</button>
-  <button class="tab" data-cat="keychains">Keychains</button>
-</div>
+  <section class="section shop" id="shop">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="divider" data-art="divider"></div>
+        <h2>The collection</h2>
+        <p>Because each piece is handmade, no two are exactly alike.</p>
+      </div>
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-cat="all">All</button>
+        <button class="tab" data-cat="earrings">Earrings</button>
+        <button class="tab" data-cat="keychains">Keychains</button>
+      </div>
+      <div class="grid" id="grid">
+        <div class="loading-msg">Loading pieces…</div>
+      </div>
+      <p class="shop-note">Pieces may differ slightly from any photo shown.</p>
+    </div>
+  </section>
 
-<div class="grid" id="grid">
-  <div class="loading-msg">Loading pieces…</div>
-</div>
+  <section class="craft" id="craft">
+    <div class="craft-in">
+      <div class="craft-art reveal" data-art="mirror"></div>
+      <div>
+        <p class="eyebrow reveal">Our craft</p>
+        <h2 class="reveal" style="--i:1">Made slowly, <em>never</em> from a mould.</h2>
+        <p class="lead reveal" style="--i:2">Every piece starts at a worktable with beads, thread and brass-tone findings. The motifs come from places we love: temple walls, lotus ponds, palace windows and the brass things on grandmother's shelf.</p>
+        <div class="pillars">
+          <div class="pillar reveal" style="--i:2"><div class="no">i.</div><h4>Shaped by hand</h4><p>Each piece is finished by hand, so small differences are part of it.</p></div>
+          <div class="pillar reveal" style="--i:3"><div class="no">ii.</div><h4>Made to order</h4><p>Pieces are made after you order, so delivery may take a little longer.</p></div>
+          <div class="pillar reveal" style="--i:4"><div class="no">iii.</div><h4>Delivered, or refunded</h4><p>If an order cannot be delivered, you get a full refund.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section class="section policy" id="policy">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="divider" data-art="divider"></div>
+        <h2>Before you order</h2>
+        <p>A few honest notes about handmade work.</p>
+      </div>
+      <div class="policy-grid">
+        <div class="pol reveal"><span data-art="mark"></span><h4>Each piece differs</h4><p>Handmade pieces vary slightly in shape, colour and finish. Yours will not be an exact copy of the sample.</p></div>
+        <div class="pol reveal" style="--i:1"><span data-art="mark"></span><h4>Delivery may be delayed</h4><p>Pieces are made to order. Delivery can take a little longer than usual.</p></div>
+        <div class="pol reveal" style="--i:2"><span data-art="mark"></span><h4>Refund if not delivered</h4><p>If we cannot deliver your order, the full amount is refunded.</p></div>
+        <div class="pol reveal" style="--i:3"><span data-art="mark"></span><h4>No returns after delivery</h4><p>Once an order is delivered, it cannot be returned or refunded.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="skyline" data-art="skyline" aria-hidden="true" style="margin-top:0"></div>
 <footer class="site-footer">
-  <svg class="border-strip" viewBox="0 0 480 14" preserveAspectRatio="none" aria-hidden="true">
-    <defs><pattern id="paisleyPatF" width="20" height="14" patternUnits="userSpaceOnUse">
-      <path d="M10 2 C14 2 14 8 10 10 C6 12 4 10 4 7 C4 4 6 2 10 2 Z" fill="none" stroke="#b8862f"></path>
-    </pattern></defs>
-    <rect width="480" height="14" fill="url(#paisleyPatF)"></rect>
-  </svg>
-  <svg class="rabab-icon" width="16" height="26" viewBox="0 0 40 70" style="color:var(--maroon)"><use href="#sym-rabab"></use></svg>
-  Questions or custom orders? WhatsApp <b>9362821348</b>.<br>
-  Handmade pieces: delivery may be slightly delayed. If a piece becomes undeliverable, the full amount is refunded.
+  <div class="foot-in">
+    <div class="foot-rabab" data-art="rabab"></div>
+    <div class="foot-mid">
+      <div class="wm">Hamsadhwani</div>
+      <div class="wm-dev">हंसध्वनि</div>
+      <p>Handcrafted by Sneha. Questions or custom orders? WhatsApp <a href="https://wa.me/919362821348" target="_blank" rel="noopener">9362821348</a>.</p>
+      <div class="foot-links">
+        <a href="#shop">Shop</a><a href="#craft">Our craft</a><a href="#policy">Policies</a>
+      </div>
+    </div>
+    <div class="foot-r">
+      <div data-art="swanPair"></div>
+      <div data-art="diyaRow"></div>
+    </div>
+  </div>
+  <div class="foot-base">Handmade in India · Pay by UPI · No account needed</div>
 </footer>
 
 <!-- Cart panel -->
@@ -141,7 +168,7 @@
 <div class="panel" id="cartPanel">
   <div class="panel-head">
     <h2>Your cart</h2>
-    <button class="icon-btn" id="closeCart">✕</button>
+    <button class="icon-btn" id="closeCart" aria-label="Close cart">✕</button>
   </div>
   <div class="panel-body" id="cartBody"></div>
   <div class="panel-foot">
@@ -155,12 +182,12 @@
 <div class="panel checkout-panel" id="checkoutPanel">
   <div class="panel-head">
     <h2>Checkout</h2>
-    <button class="icon-btn" id="closeCheckout">✕</button>
+    <button class="icon-btn" id="closeCheckout" aria-label="Close checkout">✕</button>
   </div>
   <div class="panel-body">
     <div class="section-label">Order</div>
     <div id="checkoutItems"></div>
-    <div class="order-summary-line" style="font-weight:700;border-top:1px solid var(--line);padding-top:8px;margin-top:4px;">
+    <div class="order-summary-line" style="font-weight:500;border-top:1px solid var(--line);padding-top:8px;margin-top:4px;">
       <span>Total</span><span id="checkoutTotal">₹0</span>
     </div>
 
@@ -180,8 +207,8 @@
       <textarea id="buyerAddress" placeholder="Full address with pincode"></textarea>
       <div class="err" id="errAddress">Please enter your delivery address.</div>
     </div>
-    <div class="note-box">
-      Handmade order: delivery may be slightly delayed. If delivery isn't possible, your full payment is refunded.
+    <div class="note-box" id="policyNote">
+      Each piece is handmade and may differ slightly from the photos. Delivery may be a little delayed. If your order cannot be delivered, you get a full refund. Once delivered, pieces cannot be returned or refunded.
     </div>
 
     <div class="section-label">Pay via UPI</div>
@@ -217,7 +244,7 @@
     <div class="form-err" id="submitErr">Something went wrong placing your order. Please check your connection and try again.</div>
   </div>
   <div class="panel-foot">
-    <button class="primary-btn" id="placeOrderBtn">I've paid — Place order</button>
+    <button class="primary-btn" id="placeOrderBtn">I've paid: place order</button>
   </div>
 </div>
 
@@ -226,21 +253,13 @@
 <div class="panel checkout-panel" id="successPanel">
   <div class="panel-head">
     <h2>Order placed</h2>
-    <button class="icon-btn" id="closeSuccess">✕</button>
+    <button class="icon-btn" id="closeSuccess" aria-label="Close">✕</button>
   </div>
   <div class="panel-body">
     <div class="success-wrap">
-      <div class="petal-field" aria-hidden="true">
-        <span style="left:8%;animation-delay:0s;">🪷</span>
-        <span style="left:24%;animation-delay:0.35s;">🌸</span>
-        <span style="left:40%;animation-delay:0.15s;">🪷</span>
-        <span style="left:58%;animation-delay:0.5s;">🌸</span>
-        <span style="left:74%;animation-delay:0.25s;">🪷</span>
-        <span style="left:90%;animation-delay:0.45s;">🌸</span>
-      </div>
-      <div class="success-check">✅</div>
-      <h3 style="margin:0 0 4px;">Your order is placed!</h3>
-      <p style="color:var(--muted);font-size:0.88rem;">Send the WhatsApp confirmation below so Sneha has your order on record.</p>
+      <div class="success-mark" data-art="mark"></div>
+      <h3 style="margin:8px 0 4px;font-size:1.7rem;color:var(--oxblood);">Your order is placed</h3>
+      <p style="color:var(--muted);font-size:.88rem;">Send the WhatsApp confirmation below so Sneha has your order on record.</p>
       <div class="order-id-box" id="orderSummaryBox"></div>
       <a class="wa-btn" id="whatsappLink" href="#" target="_blank" rel="noopener">Send on WhatsApp</a><br>
       <button class="copy-btn" id="copySummary">Copy order details</button>
@@ -249,7 +268,10 @@
 </div>
 
 <script src="js/config.js"></script>
+<script src="js/samples.js"></script>
 <script src="js/supabase-client.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/store.js"></script>
 </body>
 </html>

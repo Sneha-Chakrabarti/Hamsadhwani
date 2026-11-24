@@ -1,4 +1,4 @@
-# Handcrafted by Sneha — jewellery storefront
+# Hamsadhwani: handmade jewellery storefront (Handcrafted by Sneha)
 
 A small storefront for handmade earrings and keychains: browse, add to
 cart, check out with UPI, no customer accounts. Orders are marked
@@ -14,8 +14,11 @@ product photos, no server to run yourself.
 index.html       storefront (public)
 admin.html       admin panel (you log in here)
 css/style.css    shared styles
-js/config.js     your Supabase project keys + UPI/WhatsApp details — EDIT THIS
+js/config.js     your Supabase project keys + UPI/WhatsApp details: EDIT THIS
 js/supabase-client.js
+js/samples.js    sample pieces + the SAMPLE_MODE switch (see "Sample mode")
+js/scenes.js     the page artwork (palace hero, temple skyline, mirror, rabab), all vector
+js/ui.js         page motion: reveals, petals, rotating announcement bar
 js/store.js      storefront logic
 js/admin.js      admin logic
 sql/schema.sql   run once in Supabase to create tables, policies, starter products
@@ -47,7 +50,7 @@ sql/schema.sql   run once in Supabase to create tables, policies, starter produc
 
 1. Go to **Authentication** → **Users** → **Add user** → **Create new user**.
 2. Enter an email and password for yourself. This is what you'll use
-   to log into `admin.html` — it's separate from your personal email
+   to log into `admin.html`, it's separate from your personal email
    login anywhere else. Add a second one the same way if you want a
    backup admin account.
 
@@ -55,7 +58,7 @@ sql/schema.sql   run once in Supabase to create tables, policies, starter produc
 
 1. Go to **Project Settings** → **API**.
 2. Copy the **Project URL** and the **anon public** key (not the
-   service_role key — never put that one in a public website).
+   service_role key, never put that one in a public website).
 
 ## 6. Fill in `js/config.js`
 
@@ -70,7 +73,7 @@ const WHATSAPP_NUMBER = "919362821348";
 ```
 
 with your real Supabase URL/key, your real UPI ID, and the WhatsApp
-number orders should land on. The anon key is meant to be public — it
+number orders should land on. The anon key is meant to be public, it
 only grants what the policies in `schema.sql` allow (shoppers can read
 the catalog and place orders; only logged-in admins can edit products
 or read order details).
@@ -96,7 +99,7 @@ Your storefront is at that URL, and your admin panel is at
   the top of the Products tab. Uploading a photo there stores it in
   Supabase and shows it on the storefront automatically.
 - **Mark something sold out**: click "Mark sold out" next to it in the
-  admin table — it immediately stops being addable to cart on the
+  admin table, it immediately stops being addable to cart on the
   storefront.
 - **See orders**: the Orders tab lists every order with the buyer's
   details and payment confirmation, newest first. The WhatsApp message
@@ -104,7 +107,7 @@ Your storefront is at that URL, and your admin panel is at
   this table is the full record. Update the status dropdown (Placed →
   Shipped → Delivered, or Refunded/Cancelled) as you fulfil each one.
 - **Refund policy**: if a handmade piece can't be delivered, refund the
-  buyer via your UPI app directly (there's no automatic refund flow —
+  buyer via your UPI app directly (there's no automatic refund flow -
   UPI itself has none), then mark the order "Refunded" here.
 
 ## Costs
@@ -113,3 +116,23 @@ Supabase's free tier covers this comfortably for a small shop (500MB
 database, 1GB file storage, 50,000 monthly active users). GitHub Pages
 is free for public repos. You will not need to pay anything to run
 this as described.
+
+
+## Sample mode (placeholder pieces)
+
+`js/samples.js` starts with `const SAMPLE_MODE = true;`. While it is
+true the storefront shows ten placeholder pieces with plain empty
+photo rectangles, and checkout will not record any order (it shows a
+preview-mode message instead). When you have added your real products
+in the admin panel, change it to `const SAMPLE_MODE = false;` and the
+site reads from Supabase again.
+
+## Policy wording used on the site
+
+- Each piece is handmade, so it may differ slightly from any photo.
+- Delivery may be a little delayed.
+- Full refund only if an order cannot be delivered.
+- No returns or refunds once an order is delivered.
+
+If you want to change the wording, search for "Each piece" and
+"refund" in `index.html` and `js/store.js` (the WhatsApp message).
