@@ -27,8 +27,15 @@
   }
 
   // ---------- load products from Supabase ----------
+  const IS_SAMPLE = (typeof SAMPLE_MODE !== "undefined") && SAMPLE_MODE;
   async function loadProducts(){
     const grid = document.getElementById("grid");
+    if(IS_SAMPLE){
+      PRODUCTS = SAMPLE_PRODUCTS.slice();
+      renderGrid();
+      renderCartPanel();
+      return;
+    }
     try{
       const { data, error } = await supabaseClient
         .from("products")
@@ -37,11 +44,12 @@
       if(error) throw error;
       PRODUCTS = data || [];
       renderGrid();
+      renderCartPanel();
     }catch(e){
       grid.innerHTML = "";
       const msg = document.createElement("div");
       msg.className = "empty-msg";
-      msg.textContent = "Couldn't load the catalog right now. Please refresh, or check back shortly.";
+      msg.textContent = "Could not load the collection right now. Please refresh, or check back shortly.";
       grid.appendChild(msg);
       console.error(e);
     }
@@ -54,25 +62,40 @@
     if(list.length === 0){
       const empty = document.createElement("div");
       empty.className = "empty-msg";
-      empty.textContent = "Nothing here yet — check back soon!";
+      empty.textContent = "Nothing here yet. Check back soon.";
       grid.appendChild(empty);
       return;
     }
-    list.forEach(p=>{
+    list.forEach((p, i)=>{
       const card = document.createElement("div");
-      card.className = "card";
+      card.className = "card reveal";
+      card.style.setProperty("--i", String(i % 4));
 
       const thumb = document.createElement("div");
       thumb.className = "thumb";
       if(p.image_url){
         const img = document.createElement("img");
         img.src = p.image_url;
-        img.alt = "";
+        img.alt = p.name;
+        img.loading = "lazy";
         thumb.appendChild(img);
-      } else {
-        thumb.textContent = p.category === "earrings" ? "💎" : "🔑";
       }
-      if(!p.available){
+      const idx = document.createElement("span");
+      idx.className = "idx";
+      idx.textContent = "No. " + String(i + 1).padStart(2, "0");
+      thumb.appendChild(idx);
+      if(IS_SAMPLE){
+        const st = document.createElement("span");
+        st.className = "sample-tag";
+        st.textContent = "Sample";
+        thumb.appendChild(st);
+      }
+      if(p.available){
+        const bt = document.createElement("span");
+        bt.className = "badge-tag";
+        bt.textContent = "Made to order";
+        thumb.appendChild(bt);
+      } else {
         const ribbon = document.createElement("div");
         ribbon.className = "ribbon";
         ribbon.textContent = "Sold out";
@@ -120,6 +143,7 @@
 
       card.appendChild(body);
       grid.appendChild(card);
+      if(window.UI) window.UI.observe(card); else card.classList.add("in");
     });
   }
 
@@ -132,11 +156,15 @@
     body.innerHTML = "";
     const ids = Object.keys(cart).filter(id=>cart[id] > 0 && productById(id) && productById(id).available);
     // drop stale/unavailable items from the visible cart silently
-    Object.keys(cart).forEach(id=>{
-      const p = productById(id);
-      if(!p || !p.available){ delete cart[id]; }
-    });
-    saveCart();
+    // only prune once the catalogue has loaded, otherwise a page refresh would empty the cart
+    if(PRODUCTS.length){
+      Object.keys(cart).forEach(id=>{
+        const p = productById(id);
+        if(!p || !p.available){ delete cart[id]; }
+      });
+      saveCart();
+      renderCartBadge();
+    }
 
     if(ids.length === 0){
       const empty = document.createElement("div");
@@ -156,8 +184,6 @@
           const img = document.createElement("img");
           img.src = p.image_url; img.alt = "";
           thumb.appendChild(img);
-        } else {
-          thumb.textContent = p.category === "earrings" ? "💎" : "🔑";
         }
         row.appendChild(thumb);
 
@@ -167,8 +193,7 @@
         h4.textContent = p.name;
         info.appendChild(h4);
         const priceLine = document.createElement("div");
-        priceLine.style.fontSize = "0.84rem";
-        priceLine.style.color = "var(--muted)";
+        priceLine.className = "cart-meta";
         priceLine.textContent = fmt(p.price) + " each";
         info.appendChild(priceLine);
 
@@ -304,6 +329,13 @@
     const data = validateCheckout();
     if(!data) return;
 
+    if(IS_SAMPLE){
+      const se = document.getElementById("submitErr");
+      se.textContent = "Preview mode: these are sample pieces, so no order was recorded.";
+      se.classList.add("show");
+      return;
+    }
+
     const placeBtn = document.getElementById("placeOrderBtn");
     placeBtn.disabled = true;
     placeBtn.textContent = "Placing order…";
@@ -334,7 +366,7 @@
       console.error(e);
       document.getElementById("submitErr").classList.add("show");
       placeBtn.disabled = false;
-      placeBtn.textContent = "I've paid — Place order";
+      placeBtn.textContent = "I've paid: place order";
       return;
     }
 
@@ -354,7 +386,7 @@
       "UPI account holder: " + data.holder,
       "UTR last 4: " + data.utr,
       "",
-      "(Handmade order — delivery may be slightly delayed. Full refund if delivery isn't possible.)"
+      "(Handmade order: each piece may differ slightly, and delivery may be a little delayed. Full refund only if the order cannot be delivered. No returns or refunds once delivered.)"
     ];
     const message = messageLines.join("\n");
 
@@ -384,7 +416,7 @@
     renderCartBadge();
     renderCartPanel();
     placeBtn.disabled = false;
-    placeBtn.textContent = "I've paid — Place order";
+    placeBtn.textContent = "I've paid: place order";
     ["buyerName","buyerPhone","buyerAddress","payHolder","payApp","payUtr"].forEach(id=>{
       document.getElementById(id).value = "";
     });
