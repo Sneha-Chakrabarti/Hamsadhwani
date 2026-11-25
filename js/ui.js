@@ -7,9 +7,9 @@
   // ---- vector art ----
   var S = window.Scenes;
   var map = {
-    hero: S.hero, skyline: function () { return S.skyline({}); }, mirror: S.mirror, rabab: S.rabab,
-    tileEarrings: S.tileEarrings, tileKeychains: S.tileKeychains, mark: S.mark, swanPair: S.swanPair,
-    diyaRow: S.diyaRow, divider: function () { return S.divider("dv_"); }
+    hero: S.hero, peacockCut: S.peacockCut, dresserCut: S.dresserCut, jaaliCut: S.jaaliCut, lotusSway: S.lotusSway, pond: S.pond, ghatStrip: S.ghatStrip, skyline: function () { return S.skyline({}); }, craftScene: S.craftScene,
+    tileEarrings: S.tileEarrings, tileKeychains: S.tileKeychains, mark: S.mark, diyaRow: S.diyaRow,
+    divider: function () { return S.divider("dv_"); }
   };
   var uid = 0;
   document.querySelectorAll("[data-art]").forEach(function (el) {
@@ -24,10 +24,39 @@
   });
   var root = document.documentElement.style;
   root.setProperty("--jali-light", S.jaliURI("#B8862F", 0.2));
+  root.setProperty("--jali-ochre", S.jaliURI("#8A5A12", 0.16));
+  root.setProperty("--jali-rose", S.jaliURI("#9A3A4A", 0.12));
   root.setProperty("--jali-dark", S.jaliURI("#D9AB54", 0.13));
+  root.setProperty("--folio", S.folioURI());
+
+  // ---- lotus motifs: a small spring that each scroll nudges ----
+  var sways = [].slice.call(document.querySelectorAll(".sway,.leaf,.pond-lotus")).map(function (el, i) {
+    return { el: el, a: 0, v: 0, k: parseFloat(el.getAttribute("data-sway")) || 1, ph: i * 1.7 };
+  });
+  var lastY = window.scrollY, swRaf = 0;
+  function swayTick() {
+    var live = false;
+    sways.forEach(function (s) {
+      s.v += -0.06 * s.a - 0.07 * s.v;
+      s.a += s.v;
+      s.el.style.setProperty("--sw", s.a.toFixed(3));
+      if (Math.abs(s.a) > 0.02 || Math.abs(s.v) > 0.02) live = true;
+    });
+    swRaf = live ? requestAnimationFrame(swayTick) : 0;
+  }
+  if (!reduce && sways.length) {
+    window.addEventListener("scroll", function () {
+      var y = window.scrollY, d = y - lastY;
+      lastY = y;
+      if (!d) return;
+      var imp = Math.max(-1, Math.min(1, d * 0.02));
+      sways.forEach(function (s) { s.v += imp * s.k * (0.8 + 0.4 * Math.sin(s.ph + y / 400)); });
+      if (!swRaf) swRaf = requestAnimationFrame(swayTick);
+    }, { passive: true });
+  }
 
   // ---- marquee text ----
-  var words = ["Khajuraho", "Lotus", "Antique brass", "Pearl", "Swan", "Rabab", "Palace arch", "Handmade"];
+  var words = ["Shringar", "Darpan", "Sandook", "Ghat at dusk", "Lotus", "Hamsa", "Khajuraho", "Handmade"];
   var track = document.getElementById("marqueeTrack");
   if (track) {
     var one = words.map(function (w) { return "<span>" + w + "</span>"; }).join("");
