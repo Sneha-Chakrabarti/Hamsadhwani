@@ -45,13 +45,13 @@
 </header>
 
 <main id="top">
-  <section class="hero">
+  <section class="hero" id="heroSec">
     <div class="hero-petals" id="petals" aria-hidden="true"></div>
-    <div class="hero-in" id="heroIn">
+    <div class="hero-in folio" id="heroIn">
       <div class="hero-copy">
         <p class="eyebrow reveal">Handmade jewellery · Earrings and keychains</p>
-        <h1 class="reveal" style="--i:1">Old temple <em>motifs</em>, shaped by hand.</h1>
-        <p class="lead reveal" style="--i:2">Lotus, swan and pearl. Small pieces inspired by Khajuraho stonework, palace arches and antique brass, made one at a time.</p>
+        <h1 class="reveal" style="--i:1">Made for the hour of <em>shringar</em>.</h1>
+        <p class="lead reveal" style="--i:2">Evening on the river at Kashi, a lamp lit on the balcony. Small earrings and keychains for the quiet hour of getting ready, made by hand, one at a time.</p>
         <div class="hero-cta reveal" style="--i:3">
           <a class="btn solid" href="#shop">Shop the collection</a>
           <a class="btn ghost" href="#craft">Our craft</a>
@@ -62,41 +62,51 @@
           <div>Pay by UPI</div>
         </div>
       </div>
-      <div class="hero-art reveal" style="--i:2" data-art="hero"></div>
+      <figure class="hero-art reveal" style="--i:2">
+        <div data-art="hero"></div>
+        <figcaption><b>शृंगार</b><span>The art of adorning</span></figcaption>
+      </figure>
     </div>
   </section>
 
-  <div class="skyline" data-art="skyline" aria-hidden="true"></div>
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track" id="marqueeTrack"></div>
   </div>
 
   <section class="section" id="collections">
+    <span class="vcap" aria-hidden="true">Handmade · one piece at a time</span>
     <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="divider" data-art="divider"></div>
-        <h2>Shop by collection</h2>
-        <p>Two small collections, both made by hand.</p>
+      <div class="sec-split reveal">
+        <div class="cut" data-art="peacockCut"></div>
+        <div class="sec-text">
+          <p class="eyebrow">Two small collections</p>
+          <h2>Shop by <em>collection</em></h2>
+          <p>Earrings and keychains, both made by hand at a worktable, one piece at a time. Choose a collection to see what is available now.</p>
+        </div>
       </div>
       <div class="tiles">
-        <button class="tile reveal" data-cat-link="earrings" aria-label="Shop earrings">
+        <button class="tile folio reveal" data-cat-link="earrings" aria-label="Shop earrings">
           <span data-art="tileEarrings"></span>
-          <div class="tile-label"><h3>Earrings</h3><span>Explore</span></div>
+          <div class="tile-label"><h3>Earrings</h3><small>Karnaphool, jhumka, small studs</small><span>Explore</span></div>
         </button>
-        <button class="tile reveal" style="--i:2" data-cat-link="keychains" aria-label="Shop keychains">
+        <button class="tile folio reveal" style="--i:2" data-cat-link="keychains" aria-label="Shop keychains">
           <span data-art="tileKeychains"></span>
-          <div class="tile-label"><h3>Keychains</h3><span>Explore</span></div>
+          <div class="tile-label"><h3>Keychains</h3><small>Small charms for your keys</small><span>Explore</span></div>
         </button>
       </div>
     </div>
   </section>
 
   <section class="section shop" id="shop">
+    <span class="vcap r" aria-hidden="true">No two pieces alike</span>
     <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="divider" data-art="divider"></div>
-        <h2>The collection</h2>
-        <p>Because each piece is handmade, no two are exactly alike.</p>
+      <div class="sec-split sec-rev reveal">
+        <div class="cut cut-wide" data-art="dresserCut"></div>
+        <div class="sec-text">
+          <p class="eyebrow">The collection</p>
+          <h2>Chosen at the <em>mirror</em></h2>
+          <p>Because each piece is handmade, no two are exactly alike. Pick a pair, add it to your cart and pay by UPI. There is no account to make.</p>
+        </div>
       </div>
       <div class="tabs" id="tabs">
         <button class="tab active" data-cat="all">All</button>
@@ -110,13 +120,15 @@
     </div>
   </section>
 
+  <div class="ghat-strip" data-art="ghatStrip" aria-hidden="true"></div>
+
   <section class="craft" id="craft">
     <div class="craft-in">
-      <div class="craft-art reveal" data-art="mirror"></div>
+      <div class="craft-art folio reveal" data-art="craftScene"></div>
       <div>
-        <p class="eyebrow reveal">Our craft</p>
-        <h2 class="reveal" style="--i:1">Made slowly, <em>never</em> from a mould.</h2>
-        <p class="lead reveal" style="--i:2">Every piece starts at a worktable with beads, thread and brass-tone findings. The motifs come from places we love: temple walls, lotus ponds, palace windows and the brass things on grandmother's shelf.</p>
+        <p class="eyebrow reveal">Our craft · The art of shringar</p>
+        <h2 class="reveal" style="--i:1">Adorned <em>slowly</em>, the way it was always done.</h2>
+        <p class="lead reveal" style="--i:2">Shringar is the old Indian habit of adorning oneself with care: a hand mirror, a lit lamp, a chest of jewellery opened for the evening. Every piece here is made for that ritual, at a worktable, with beads, thread and brass-tone findings.</p>
         <div class="pillars">
           <div class="pillar reveal" style="--i:2"><div class="no">i.</div><h4>Shaped by hand</h4><p>Each piece is finished by hand, so small differences are part of it.</p></div>
           <div class="pillar reveal" style="--i:3"><div class="no">ii.</div><h4>Made to order</h4><p>Pieces are made after you order, so delivery may take a little longer.</p></div>
@@ -128,16 +140,19 @@
 
   <section class="section policy" id="policy">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="divider" data-art="divider"></div>
-        <h2>Before you order</h2>
-        <p>A few honest notes about handmade work.</p>
+      <div class="sec-split reveal">
+        <div class="cut cut-jaali" data-art="jaaliCut"></div>
+        <div class="sec-text">
+          <p class="eyebrow">Hamsadhwani · हंसध्वनि</p>
+          <h2>Before you <em>order</em></h2>
+          <p>Our name is a raga: hamsa, the swan; dhwani, sound. We made these pieces to be worn at the end of a day, by lamplight. A few honest notes about handmade work follow.</p>
+        </div>
       </div>
       <div class="policy-grid">
-        <div class="pol reveal"><span data-art="mark"></span><h4>Each piece differs</h4><p>Handmade pieces vary slightly in shape, colour and finish. Yours will not be an exact copy of the sample.</p></div>
-        <div class="pol reveal" style="--i:1"><span data-art="mark"></span><h4>Delivery may be delayed</h4><p>Pieces are made to order. Delivery can take a little longer than usual.</p></div>
-        <div class="pol reveal" style="--i:2"><span data-art="mark"></span><h4>Refund if not delivered</h4><p>If we cannot deliver your order, the full amount is refunded.</p></div>
-        <div class="pol reveal" style="--i:3"><span data-art="mark"></span><h4>No returns after delivery</h4><p>Once an order is delivered, it cannot be returned or refunded.</p></div>
+        <div class="pol reveal"><span class="pol-no">i.</span><h4>Each piece differs</h4><p>Handmade pieces vary slightly in shape, colour and finish. Yours will not be an exact copy of the sample.</p></div>
+        <div class="pol reveal" style="--i:1"><span class="pol-no">ii.</span><h4>Delivery may be delayed</h4><p>Pieces are made to order. Delivery can take a little longer than usual.</p></div>
+        <div class="pol reveal" style="--i:2"><span class="pol-no">iii.</span><h4>Refund if not delivered</h4><p>If we cannot deliver your order, the full amount is refunded.</p></div>
+        <div class="pol reveal" style="--i:3"><span class="pol-no">iv.</span><h4>No returns after delivery</h4><p>Once an order is delivered, it cannot be returned or refunded.</p></div>
       </div>
     </div>
   </section>
@@ -146,20 +161,15 @@
 <div class="skyline" data-art="skyline" aria-hidden="true" style="margin-top:0"></div>
 <footer class="site-footer">
   <div class="foot-in">
-    <div class="foot-rabab" data-art="rabab"></div>
-    <div class="foot-mid">
-      <div class="wm">Hamsadhwani</div>
-      <div class="wm-dev">हंसध्वनि</div>
-      <p>Handcrafted by Sneha. Questions or custom orders? WhatsApp <a href="https://wa.me/919362821348" target="_blank" rel="noopener">9362821348</a>.</p>
-      <div class="foot-links">
-        <a href="#shop">Shop</a><a href="#craft">Our craft</a><a href="#policy">Policies</a>
-      </div>
+    <div class="wm">Hamsadhwani</div>
+    <div class="wm-dev">हंसध्वनि</div>
+    <p>Handcrafted by Sneha. Questions or custom orders? WhatsApp <a href="https://wa.me/919362821348" target="_blank" rel="noopener">9362821348</a>.</p>
+    <div class="foot-links">
+      <a href="#shop">Shop</a><a href="#craft">Our craft</a><a href="#policy">Policies</a>
     </div>
-    <div class="foot-r">
-      <div data-art="swanPair"></div>
-      <div data-art="diyaRow"></div>
-    </div>
+    <div class="foot-lamps" data-art="diyaRow"></div>
   </div>
+  <div class="pond" data-art="pond" aria-hidden="true"></div>
   <div class="foot-base">Handmade in India · Pay by UPI · No account needed</div>
 </footer>
 
