@@ -8,7 +8,7 @@
   var S = window.Scenes;
   var map = {
     hero: S.hero, peacockCut: S.peacockCut, dresserCut: S.dresserCut, jaaliCut: S.jaaliCut, lotusSway: S.lotusSway, pond: S.pond, ghatStrip: S.ghatStrip, skyline: function () { return S.skyline({}); }, craftScene: S.craftScene,
-    tileEarrings: S.tileEarrings, tileKeychains: S.tileKeychains, mark: S.mark, diyaRow: S.diyaRow,
+    tileEarrings: S.tileEarrings, tileKeychains: S.tileKeychains, mark: S.mark, diyaRow: S.diyaRow, urli: S.urli,
     divider: function () { return S.divider("dv_"); }
   };
   var uid = 0;
@@ -19,9 +19,50 @@
     var html = f();
     // make gradient ids unique when the same graphic appears more than once
     html = html.replace(/id="([a-z]+_[A-Za-z0-9]+)"/g, function (m, id) { return 'id="' + id + "_" + uid + '"'; })
-      .replace(/url\(#([a-z]+_[A-Za-z0-9]+)\)/g, function (m, id) { return "url(#" + id + "_" + uid + ")"; });
+      .replace(/url\(#([a-z]+_[A-Za-z0-9]+)\)/g, function (m, id) { return "url(#" + id + "_" + uid + ")"; })
+      .replace(/href="#([a-z]+_[A-Za-z0-9]+)"/g, function (m, id) { return 'href="#' + id + "_" + uid + '"'; });
     el.innerHTML = html;
   });
+  // the sandook's metal sheen and pearl iridescence are SMIL: stop them for reduced motion, and while the scene is off screen
+  (function () {
+    var svg = document.querySelector(".craft-svg");
+    if (!svg || !svg.pauseAnimations) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      svg.pauseAnimations();
+      return;
+    }
+    if (!("IntersectionObserver" in window)) return;
+    svg.pauseAnimations();
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) svg.unpauseAnimations(); else svg.pauseAnimations(); });
+    }, { rootMargin: "80px" }).observe(svg);
+  })();
+  // the urli's lilies and lamps drift only while it is on screen
+  (function () {
+    var svg = document.querySelector(".urli-svg");
+    if (!svg || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { svg.classList.toggle("off", !e.isIntersecting); });
+    }, { rootMargin: "80px" }).observe(svg);
+  })();
+  // glitter on the sandook scene flares up when the pointer passes over it
+  (function () {
+    var svg = document.querySelector(".craft-svg");
+    if (!svg || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+    var stars = [].slice.call(svg.querySelectorAll(".glit,.glint")), raf = 0, px = 0, py = 0;
+    svg.addEventListener("pointermove", function (e) {
+      px = e.clientX; py = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = 0;
+        stars.forEach(function (el) {
+          if (el.classList.contains("flare")) return;
+          var b = el.getBoundingClientRect(), dx = b.left + b.width / 2 - px, dy = b.top + b.height / 2 - py;
+          if (dx * dx + dy * dy < 3000) { el.classList.add("flare"); setTimeout(function () { el.classList.remove("flare"); }, 900); }
+        });
+      });
+    });
+  })();
   var root = document.documentElement.style;
   root.setProperty("--jali-light", S.jaliURI("#B8862F", 0.2));
   root.setProperty("--jali-ochre", S.jaliURI("#8A5A12", 0.16));
@@ -56,7 +97,7 @@
   }
 
   // ---- marquee text ----
-  var words = ["Shringar", "Darpan", "Sandook", "Ghat at dusk", "Lotus", "Hamsa", "Khajuraho", "Handmade"];
+  var words = ["Shringar", "Lamplight", "Brass", "Lotus", "Swan", "Moonlight", "Handmade"];
   var track = document.getElementById("marqueeTrack");
   if (track) {
     var one = words.map(function (w) { return "<span>" + w + "</span>"; }).join("");

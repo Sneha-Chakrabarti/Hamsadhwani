@@ -22,14 +22,25 @@
   }
 
   /* shared gradients (prefix p keeps ids unique per svg) */
-  function common(p) {
+  /* sheen: a slow travelling light across a gradient (SMIL, so it needs no script; ui.js stops it when off screen or reduced motion) */
+  function sheen(dur, amt, begin) {
+    return '<animateTransform attributeName="gradientTransform" type="translate" values="-' + amt + ' -' + amt + ';' + amt + ' ' + amt + ';-' + amt + ' -' + amt + '" keyTimes="0;.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" dur="' + dur + 's" begin="' + (begin || 0) + 's" repeatCount="indefinite"/>';
+  }
+  function common(p, anim) {
+    var A = function (d, amt, b) { return anim ? sheen(d, amt, b) : ""; };
     return '' +
-      '<linearGradient id="' + p + 'brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6DD92"/><stop offset=".4" stop-color="#C9953A"/><stop offset=".75" stop-color="#9A6A22"/><stop offset="1" stop-color="#E2B964"/></linearGradient>' +
-      '<linearGradient id="' + p + 'brassV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4D98C"/><stop offset=".5" stop-color="#C9953A"/><stop offset="1" stop-color="#7C5219"/></linearGradient>' +
-      '<linearGradient id="' + p + 'brassH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5219"/><stop offset=".3" stop-color="#F4D98C"/><stop offset=".55" stop-color="#C9953A"/><stop offset="1" stop-color="#6B4515"/></linearGradient>' +
+      // old gold: bright where the light strikes, a dark oxidised band, a warm return
+      '<linearGradient id="' + p + 'brass" x1="0" y1="0" x2="1" y2="1" spreadMethod="reflect"><stop offset="0" stop-color="#FFF3BF"/><stop offset=".14" stop-color="#F0CE72"/><stop offset=".32" stop-color="#D0A040"/><stop offset=".46" stop-color="#9C6F24"/><stop offset=".55" stop-color="#6F4A14"/><stop offset=".66" stop-color="#B98C34"/><stop offset=".82" stop-color="#F2D98A"/><stop offset="1" stop-color="#B4812B"/>' + A(9, 0.45, 0) + '</linearGradient>' +
+      '<linearGradient id="' + p + 'brassV" x1="0" y1="0" x2="0" y2="1" spreadMethod="reflect"><stop offset="0" stop-color="#FBE7A2"/><stop offset=".22" stop-color="#E0B552"/><stop offset=".5" stop-color="#A97A28"/><stop offset=".68" stop-color="#6E4915"/><stop offset=".86" stop-color="#C79A3E"/><stop offset="1" stop-color="#7C5219"/>' + A(11, 0.4, 1.5) + '</linearGradient>' +
+      '<linearGradient id="' + p + 'brassH" x1="0" y1="0" x2="1" y2="0" spreadMethod="reflect"><stop offset="0" stop-color="#6B4515"/><stop offset=".22" stop-color="#F6DD92"/><stop offset=".42" stop-color="#C9953A"/><stop offset=".62" stop-color="#7C5219"/><stop offset=".82" stop-color="#E7C168"/><stop offset="1" stop-color="#5E3C12"/>' + A(13, 0.4, 3) + '</linearGradient>' +
       '<linearGradient id="' + p + 'petal" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFF6EA"/><stop offset=".55" stop-color="#F7CBD3"/><stop offset="1" stop-color="#E27A9A"/></linearGradient>' +
       '<linearGradient id="' + p + 'petalD" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F6D7D8"/><stop offset=".6" stop-color="#E58EA6"/><stop offset="1" stop-color="#B8456F"/></linearGradient>' +
-      '<radialGradient id="' + p + 'pearl" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#F2EADB"/><stop offset="1" stop-color="#C5B79F"/></radialGradient>' +
+      '<radialGradient id="' + p + 'pearl" cx=".34" cy=".3" r=".85"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".22" stop-color="#FFF9F2"/><stop offset=".5" stop-color="#F4E9EC"/><stop offset=".75" stop-color="#DDE4EE"/><stop offset=".92" stop-color="#C9BCB5"/><stop offset="1" stop-color="#A99B94"/></radialGradient>' +
+      '<linearGradient id="' + p + 'pearlIri" x1="0" y1="0" x2="1" y2="1" spreadMethod="reflect"><stop offset="0" stop-color="#FFC9D6" stop-opacity=".38"/><stop offset=".35" stop-color="#C4E6FF" stop-opacity=".34"/><stop offset=".65" stop-color="#D2FFDF" stop-opacity=".3"/><stop offset="1" stop-color="#FFE3C4" stop-opacity=".36"/>' + A(7, 0.5, 0) + '</linearGradient>' +
+      '<radialGradient id="' + p + 'pearlRim" cx=".62" cy=".66" r=".56"><stop offset=".62" stop-color="#9FD8F0" stop-opacity="0"/><stop offset="1" stop-color="#9FD8F0" stop-opacity=".6"/></radialGradient>' +
+      '<radialGradient id="' + p + 'gemR" cx=".34" cy=".3" r=".8"><stop offset="0" stop-color="#FF9AAA"/><stop offset=".45" stop-color="#C41E3C"/><stop offset="1" stop-color="#600A1C"/></radialGradient>' +
+      '<radialGradient id="' + p + 'gemG" cx=".34" cy=".3" r=".8"><stop offset="0" stop-color="#86E6BE"/><stop offset=".45" stop-color="#1E8A66"/><stop offset="1" stop-color="#0A3C2C"/></radialGradient>' +
+      '<radialGradient id="' + p + 'gemW" cx=".34" cy=".3" r=".8"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#E4ECF4"/><stop offset="1" stop-color="#8E9AAE"/></radialGradient>' +
       '<linearGradient id="' + p + 'pad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F8A5E"/><stop offset="1" stop-color="#1D4A3A"/></linearGradient>' +
       '<linearGradient id="' + p + 'bronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D49A56"/><stop offset=".35" stop-color="#8E5A28"/><stop offset=".7" stop-color="#5A3515"/><stop offset="1" stop-color="#A8723A"/></linearGradient>' +
       '<linearGradient id="' + p + 'bronzeV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98F4E"/><stop offset=".5" stop-color="#7C4D22"/><stop offset="1" stop-color="#3A210D"/></linearGradient>' +
@@ -124,8 +135,9 @@
   }
 
   /* brass oil lamp, 100 x 56 box */
-  function diya(p, x, y, s, delay) {
+  function diya(p, x, y, s, delay, shadow) {
     return '<g class="diya" transform="translate(' + n(x) + ' ' + n(y) + ') scale(' + s + ')">' +
+      (shadow ? '<ellipse cx="57" cy="56" rx="47" ry="6" fill="rgba(18,5,2,.42)"/>' : '') +
       '<circle cx="14" cy="14" r="26" fill="url(#' + p + 'glow)" class="diya-glow" style="animation-delay:' + (delay || 0) + 's"/>' +
       '<path d="M4 30C12 28 18 30 22 33L80 33C90 33 96 27 99 19C100 38 82 52 58 54C34 56 12 50 4 30Z" fill="url(#' + p + 'brassV)" stroke="#5E3C12" stroke-width=".8"/>' +
       '<path d="M22 33L80 33" stroke="#F8E4A4" stroke-width="1" opacity=".7"/>' +
@@ -333,11 +345,326 @@
       '<path class="pearl-shine" d="' + path + '" fill="none" stroke="#FFFFFF" stroke-width="' + n(w * 0.36) + '" stroke-linecap="round" stroke-dasharray="0.1 ' + gap + '" transform="translate(' + n(-w * 0.17) + ' ' + n(-w * 0.2) + ')"/></g>';
   }
 
+
+  /* ---------- the pearl spill ----------
+     The positions below come from tools/spill-sim.js: a necklace and about 90 loose pearls simulated under gravity
+     (position-based dynamics, with the chest, the floor and pearl-on-pearl contact) and left to settle.
+     Each entry is [x, height, depth, strand index or -1]. The art only projects them. */
+  var SPILL = [[-56,63.3,-62,0,3.3,0],[-56,63.3,-53.9,0,3.3,0],[-56,63.3,-45.8,0,3.3,0],[-56,63.3,-37.7,0,3.3,0],[-56.3,63.3,-29.6,0,3.3,0],[-56.6,63.3,-21.5,0,3.3,0],[-56,63.4,-13.4,0,3.3,0],[-54.9,70,-8.9,0,3.3,0],[-55.9,71.3,-0.8,0,3.3,0],[-56.2,63.6,3.7,0,3.3,0],[-55.4,55.3,3.4,0,3.3,0],[-54.6,47,3.7,0,3.3,0],[-53.7,38.8,3.9,0,3.3,0],[-52.6,30.7,4.3,0,3.3,0],[-51.2,22.6,4.7,0,3.3,0],[-49.2,14.7,5.3,0,3.3,0],[-46,7.3,6.2,0,3.3,0],[-39.2,3.3,8.2,0,3.3,0],[-37.6,3.3,16.3,0,3.3,0],[-29.8,3.3,18.8,0,3.3,0],[-21.8,3.3,19.3,0,3.3,0],[-13.7,3.3,18.7,0,3.3,1],[-11.6,3.3,11.1,0,3.3,0],[-10.8,4.3,3.5,0,3.3,0],[-7,11.5,3.5,0,3.3,0],[-0.3,16.4,3.3,0,3.3,0],[2.5,24.1,3.3,0,3.3,0],[4.3,32.1,3.3,0,3.3,0],[5.5,40.3,3.3,0,3.3,0],[6.5,48.5,3.3,0,3.3,0],[7.3,56.8,3.3,0,3.3,0],[8,65.1,3.3,0,3.3,0],[8.1,71.3,-2.9,0,3.3,0],[8.9,65.8,-9.5,0,3.3,0],[9.8,64,-17.3,0,3.3,0],[10.7,63.3,-25.4,0,3.3,0],[11.7,63.3,-33.9,0,3.3,0],[13.4,63.3,-41.8,0,3.3,0],[15.4,63.3,-49.6,0,3.3,0],[17.4,63.3,-57.5,0,3.3,0],[23.5,63.3,-60.5,0,3.3,0],[31.5,63.3,-61.4,0,3.3,0],[-55.7,69.6,-61.9,1,3.3,0],[-50.7,64.1,-57.8,1,3.3,0],[-46.1,63.3,-51.9,1,3.3,0],[-44,63.3,-44,1,3.3,0],[-43.1,63.4,-34.8,1,3.3,0],[-41.8,63.8,-26.6,1,3.3,0],[-40.6,65.4,-18.5,1,3.3,0],[-39.4,67.9,-10.5,1,3.3,0],[-38.2,71.3,-3.4,1,3.3,0],[-38,64.9,2.8,1,3.3,0],[-35.9,56.7,3.3,1,3.3,0],[-33.5,48.7,3.3,1,3.3,0],[-30.8,40.8,3.4,1,3.3,0],[-27.7,33.1,3.4,1,3.3,0],[-24.1,25.7,3.6,1,3.3,0],[-19.6,18.9,5,1,3.3,0],[-14.3,12.8,6.7,1,3.3,0],[-8.1,8.1,8.6,1,3.3,0],[0.1,6.9,8,1,3.3,1],[8.1,8.6,7.4,1,3.3,0],[15.2,12.8,6.8,1,3.3,0],[21.2,18.5,6.3,1,3.3,0],[26.2,25.1,5.9,1,3.3,0],[30.5,32.2,6,1,3.3,0],[33.8,39.9,5.2,1,3.3,0],[36.7,47.7,4.6,1,3.3,0],[39.2,55.7,4,1,3.3,0],[41.7,63.8,3.9,1,3.3,0],[42,71.3,-0.5,1,3.3,0],[42.8,69.8,-8.9,1,3.3,0],[43.5,65.1,-15.4,1,3.3,0],[44.5,63.4,-23.4,1,3.3,0],[45.2,63.3,-31.5,1,3.3,0],[46.5,63.3,-39.5,1,3.3,0],[48.8,63.3,-47.3,1,3.3,0],[49.9,63.3,-55.3,1,3.3,0],[54.6,63.3,-61.8,1,3.3,0],[-10.2,63.3,-62,2,3.3,0],[-2.2,63.3,-60.7,2,3.3,0],[5.7,63.3,-58.7,2,3.3,0],[12.3,64.7,-55,2,3.3,0],[13.1,69.1,-47.3,2,3.3,0],[15.1,69.3,-40.4,2,3.3,0],[16.8,66.1,-32.6,2,3.3,0],[18,63.3,-24.7,2,3.3,0],[19,64.1,-16.7,2,3.3,0],[19.8,67.8,-9.1,2,3.3,0],[20.1,71.3,-1.2,2,3.3,0],[20.1,64.1,3.8,2,3.3,0],[21.3,56,4.7,2,3.3,0],[22.6,48,6.4,2,3.3,0],[24.2,40.1,8.4,2,3.3,0],[26.3,32.7,11.1,2,3.3,0],[29.7,25.3,11.5,2,3.3,1],[34.7,19.1,10,2,3.3,0],[42.5,19,7.7,2,3.3,0],[47.7,25.2,6.2,2,3.3,0],[50.8,32.7,5.2,2,3.3,0],[53,40.6,4.6,2,3.3,0],[54.7,48.7,4.1,2,3.3,0],[56,56.9,3.7,2,3.3,0],[57.2,65.2,3.6,2,3.3,0],[57.1,71.3,-2.6,2,3.3,0],[56.9,67.6,-10.4,2,3.3,0],[56.6,65.1,-18.3,2,3.3,0],[56.4,63.7,-26.4,2,3.3,0],[56.2,63.3,-35.4,2,3.3,0],[55.9,63.3,-43.5,2,3.3,0],[56,63.3,-51.3,2,3.3,0],[59.6,67.6,-56.3,2,3.3,0],[-56.4,76.2,-62,3,3.3,0],[-48.7,71.3,-61.4,3,3.3,0],[-43.7,65.7,-59.1,3,3.3,0],[-36.3,63.4,-56,3,3.3,0],[-33.8,63.3,-48.3,3,3.3,0],[-31.9,63.3,-40.5,3,3.3,0],[-30.4,63.3,-32.5,3,3.3,0],[-29.5,63.3,-24.5,3,3.3,0],[-28.5,63.3,-16.3,3,3.3,0],[-27.4,67.1,-9.3,3,3.3,0],[-27,71.3,-3,3,3.3,0],[-27,64.8,3.3,3,3.3,0],[-26,56.6,3.3,3,3.3,0],[-24.9,48.5,3.5,3,3.3,0],[-23.4,40.5,3.8,3,3.3,0],[-21.2,32.7,4.2,3,3.3,0],[-18.3,25.5,6.9,3,3.3,0],[-10.4,26.2,4.9,3,3.3,0],[-7.5,33.8,4.2,3,3.3,0],[-5.9,41.8,3.8,3,3.3,0],[-4.8,50,3.5,3,3.3,0],[-4,58.3,3.3,3,3.3,0],[-3,66.5,2,3,3.3,0],[-2.8,71.3,-4.7,3,3.3,0],[-2.2,66.3,-11.1,3,3.3,0],[-1.2,63.4,-18.9,3,3.3,0],[-0.1,63.3,-27.1,3,3.3,0],[0.9,63.3,-35.5,3,3.3,0],[2.9,63.5,-43.5,3,3.3,0],[5.6,65.3,-50.7,3,3.3,0],[8.2,69.1,-57.8,3,3.3,0],[15,67.7,-61.6,3,3.3,0],[23.2,69.7,-61.6,3,3.3,0],[34.4,62.9,-14.5,-1,2.86,0],[11.5,2.9,18.1,-1,2.94,0],[14.1,70.7,-0.5,-1,2.67,0],[2.6,70.6,-4,-1,2.57,0],[4.3,63.1,-14,-1,3.09,0],[46.9,2.6,84.5,-1,2.58,0],[-8.4,2.7,102.6,-1,2.7,0],[33.3,63,-9,-1,2.96,0],[3.5,68.8,-12.4,-1,3.06,0],[27.4,2.6,85.1,-1,2.57,0],[25,62.9,-16.7,-1,2.89,0],[43.8,2.6,53.3,-1,2.57,0],[43.2,2.6,37.7,-1,2.56,0],[14.3,62.7,-20.6,-1,2.72,0],[16.3,62.5,-8.5,-1,2.52,0],[27.8,44.2,10.1,-1,2.67,0],[-10.5,62.8,-8.8,-1,2.77,0],[31.8,62.7,-19.3,-1,2.68,0],[24.3,70.7,-6.7,-1,2.76,0],[13.6,62.7,-13.3,-1,2.73,0],[13.3,74,-4.6,-1,2.54,0],[-1.1,69,-16.3,-1,2.87,0],[9.3,69.4,-14.4,-1,2.91,0],[-0.6,72.2,-9.5,-1,2.94,0],[6.6,3,20.9,-1,3.02,0],[27.2,62.9,-9.1,-1,2.89,0],[11.9,70.2,-7.2,-1,2.51,0],[6,70.6,-8.2,-1,2.54,0],[24.8,66.8,-12.5,-1,2.83,0],[4.2,62.9,-21.6,-1,2.92,0],[14.9,68.3,-13.2,-1,2.94,0],[4.6,74.4,-11.4,-1,2.75,0],[24.4,62.9,-27.1,-1,2.88,0],[6.6,76.2,-4.9,-1,2.88,0],[-1.1,74.5,-15.1,-1,2.8,0],[-8.4,2.9,53.2,-1,2.89,0],[17.5,73.7,-8.9,-1,3.05,0],[-23.8,2.8,91.4,-1,2.79,0],[0.7,75.8,-4.6,-1,3.03,0],[13.9,68.2,-24.2,-1,2.8,0],[33.5,3,44.7,-1,3,0],[32.4,68.4,-10.1,-1,2.74,0],[5.3,66.5,-26,-1,3.04,0],[3.4,79.4,-8.8,-1,3.09,0],[38.1,67,-15,-1,2.65,0],[23.1,66.7,-20.2,-1,2.83,0],[32.6,2.8,38.8,-1,2.78,0],[12.2,78.2,-7.1,-1,2.84,0],[3.4,77.8,-14.9,-1,2.53,0],[34.5,2.9,97.1,-1,2.87,0],[31.8,70.5,-5,-1,2.53,0],[29.9,65.4,-15.8,-1,2.54,0],[-25.5,62.7,-29.2,-1,2.71,0],[21.5,68.5,-25,-1,2.72,0],[-0.3,72.6,-20.6,-1,2.97,0]];
+  var SK = 0.38;
+  var SPARK = false, spk = 0, gc = 0, rc = 0, pc = 0; // sparkles are only made while the craft scene is being built
+  function sparkle(x, y, sz) { // a tiny star that flashes on its own clock, sitting on a pearl, a stone, a coin or a bangle
+    if (!SPARK) return '';
+    spk++;
+    var d = ((spk * 0.619) % 5.7).toFixed(2), t = (1.8 + (spk * 0.37) % 2.3).toFixed(1);
+    return '<g transform="translate(' + n(x) + ' ' + n(y) + ') scale(' + sz + ')"><g class="glit" style="--d:' + d + 's;--t:' + t + 's"><path d="M0 -4C.3 -1.1 1.1 -.3 4 0C1.1 .3 .3 1.1 0 4C-.3 1.1 -1.1 .3 -4 0C-1.1 -.3 -.3 -1.1 0 -4Z" fill="#fff"/></g></g>';
+  }
+  var SDX = 1.3, SDY = 2.0, SHC = 'rgba(18,5,2,.34)'; // one light, top left: every shape throws its shadow right and down by the same amount
+  function sy(b) { return -b[1] + SK * b[2]; }
+  function pearlDot(p, b) {
+    var x = n(b[0]), y = n(sy(b)), r = b[4];
+    if (b[5]) // a pendant at the middle of the loop: brass cap, red enamel drop
+      return '<path d="M' + x + ' ' + n(y + r * 0.6) + 'C' + n(b[0] - 4.4) + ' ' + n(y + r + 3.5) + ' ' + n(b[0] - 4) + ' ' + n(y + r + 9) + ' ' + x + ' ' + n(y + r + 11) + 'C' + n(b[0] + 4) + ' ' + n(y + r + 9) + ' ' + n(b[0] + 4.4) + ' ' + n(y + r + 3.5) + ' ' + x + ' ' + n(y + r * 0.6) + 'Z" fill="#B3203A" stroke="#5E1020" stroke-width=".5"/>' +
+        '<circle cx="' + x + '" cy="' + y + '" r="' + n(r + 0.8) + '" fill="url(#' + p + 'brass)" stroke="#6B4515" stroke-width=".6"/><circle cx="' + x + '" cy="' + n(y - 0.2) + '" r="' + n(r * 0.5) + '" fill="#B3203A"/>';
+    return '<use href="#' + p + 'pG" transform="translate(' + x + ' ' + y + ') scale(' + r + ')"/>';
+  }
+  /* extra defs for the craft scene: the pearl (unit radius: pearl, drifting iridescence, rim light, highlight), the shared drop shadow */
+  function jewelDefs(p) {
+    return '<g id="' + p + 'pG"><circle r="1" fill="url(#' + p + 'pearl)"/><circle r="1" fill="url(#' + p + 'pearlIri)"/><circle r="1" fill="url(#' + p + 'pearlRim)"/>' +
+      '<ellipse cx="-.36" cy="-.42" rx=".3" ry=".17" transform="rotate(-38 -.36 -.42)" fill="#fff" opacity=".95"/><circle cx="-.52" cy="-.52" r=".07" fill="#fff"/>' +
+      '<path d="M.55 .62A.84 .84 0 0 1 -.1 .86" fill="none" stroke="#fff" stroke-width=".07" opacity=".45" stroke-linecap="round"/>' +
+      '<circle r="1" fill="none" stroke="#B3A68E" stroke-width=".08" opacity=".7"/></g>' +
+      '<filter id="' + p + 'ds" x="-25%" y="-25%" width="160%" height="160%"><feDropShadow dx="' + SDX + '" dy="' + SDY + '" stdDeviation=".75" flood-color="#120502" flood-opacity=".42"/></filter>' +
+      '<filter id="' + p + 'blur" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>' +
+      '<radialGradient id="' + p + 'lpool"><stop offset="0" stop-color="#FFB85C" stop-opacity=".55"/><stop offset=".5" stop-color="#FF9A3C" stop-opacity=".2"/><stop offset="1" stop-color="#FF9A3C" stop-opacity="0"/></radialGradient>';
+  }
+  function shadowed(p, inner) { return '<g filter="url(#' + p + 'ds)">' + inner + '</g>'; }
+  function glint(x, y, sz, i) { // a four-point star that flashes now and then, each on its own clock
+    var d = ((i * 0.61) % 5.3).toFixed(2), t = (3.9 + (i % 4) * 0.8).toFixed(1);
+    return '<g transform="translate(' + n(x) + ' ' + n(y) + ') scale(' + sz + ')"><g class="glint" style="--d:' + d + 's;--t:' + t + 's"><circle r="4.4" fill="rgba(255,244,200,.32)"/><path d="M0 -8C.7 -2.2 2.2 -.7 8 0C2.2 .7 .7 2.2 0 8C-.7 2.2 -2.2 .7 -8 0C-2.2 -.7 -.7 -2.2 0 -8Z" fill="#fff"/><circle r="1.1" fill="#fff"/></g></g>';
+  }
+  /* a bangle seen from above: a tilted ring with a dark under-edge, a bright face and a highlight */
+  function ring(cx, cy, rx, ry, rot, col, w, shadow) {
+    var t = rot ? ' transform="rotate(' + rot + ' ' + n(cx) + ' ' + n(cy) + ')"' : '', glass = col !== GD;
+    var o = '<g' + t + '>' + '<ellipse cx="' + n(cx + SDX * 0.8) + '" cy="' + n(cy + SDY * 0.9) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="' + SHC + '" stroke-width="' + w + '"/>' +
+      '<ellipse cx="' + n(cx) + '" cy="' + n(cy + 0.9) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="#5E3C12" stroke-width="' + n(w + 0.9) + '"/>' +
+      '<ellipse cx="' + n(cx) + '" cy="' + n(cy) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="' + col + '" stroke-width="' + w + '"/>';
+    if (glass) // a glass bangle: a deeper inner band, a long glossy streak and a thin hard glint
+      o += '<ellipse cx="' + n(cx) + '" cy="' + n(cy + w * 0.18) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="' + n(w * 0.4) + '"/>' +
+        '<ellipse cx="' + n(cx) + '" cy="' + n(cy - w * 0.2) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="rgba(255,255,255,.62)" stroke-width="' + n(w * 0.32) + '" stroke-linecap="round" stroke-dasharray="' + n(rx * 1.9) + ' ' + n(rx * 4.4) + '" stroke-dashoffset="' + n(-rx * 3.7) + '"/>' +
+        '<ellipse cx="' + n(cx) + '" cy="' + n(cy - w * 0.3) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="#fff" stroke-width="' + n(w * 0.1) + '" stroke-linecap="round" stroke-dasharray="' + n(rx * 0.5) + ' ' + n(rx * 5.8) + '" stroke-dashoffset="' + n(-rx * 4.2) + '"/>';
+    o += '<ellipse cx="' + n(cx) + '" cy="' + n(cy - 0.5) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="rgba(255,244,200,.55)" stroke-width="' + n(w * 0.28) + '" stroke-dasharray="' + n(rx * 1.3) + ' ' + n(rx * 4.6) + '"/>';
+    if (SPARK && (glass || rc % 3 === 0) && (rc++ % 2 === 0)) o += sparkle(cx - rx * 0.6, cy - ry * 0.8, 0.75);
+    return o + '</g>';
+  }
+  function chainPath(d, w, col) { // a chain of small round links
+    return '<path d="' + d + '" fill="none" stroke="rgba(18,5,2,.4)" stroke-width="' + (w + 1) + '" stroke-linecap="round" stroke-dasharray="0.1 ' + n(w * 1.15) + '" transform="translate(' + SDX * 0.9 + ' ' + SDY * 0.9 + ')"/>' +
+      '<path d="' + d + '" fill="none" stroke="#6B4515" stroke-width="' + (w + 0.7) + '" stroke-linecap="round" stroke-dasharray="0.1 ' + n(w * 1.15) + '"/>' +
+      '<path d="' + d + '" fill="none" stroke="' + col + '" stroke-width="' + w + '" stroke-linecap="round" stroke-dasharray="0.1 ' + n(w * 1.15) + '"/>';
+  }
+  /* ---------- ornate pieces ---------- */
+  var GD = "#E3B04B", GE = "#5E3C12", RED = "#B3203A", GRN = "#1E7A5E";
+  function gemFill(p, col) { return col === RED ? 'url(#' + p + 'gemR)' : col === GRN ? 'url(#' + p + 'gemG)' : col === "#F6EEDD" ? 'url(#' + p + 'gemW)' : col; }
+  /* stones are cut like crystal: a girdle, eight crown facets lit from the top left, a table, hard edges, a glaze rim and a bright
+     point. In the craft scene two facets flash on their own clocks and a star sits on the stone. */
+  var GP = {};
+  GP[RED] = { l: '#FFB8C2', m: '#DA2745', d: '#8A1129', x: '#42051A' };
+  GP[GRN] = { l: '#B4FADD', m: '#22A877', d: '#0E6446', x: '#04301F' };
+  GP["#F6EEDD"] = { l: '#FFFFFF', m: '#DDE7F3', d: '#93A0B6', x: '#586480' };
+  function hx(c) { return [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)]; }
+  function mix(a, b, f) { var A = hx(a), B = hx(b); return 'rgb(' + [0, 1, 2].map(function (i) { return Math.round(A[i] + (B[i] - A[i]) * f); }).join(',') + ')'; }
+  function tone(P, t) { return t < 0.34 ? mix(P.x, P.d, t / 0.34) : t < 0.67 ? mix(P.d, P.m, (t - 0.34) / 0.33) : mix(P.m, P.l, Math.min(1, (t - 0.67) / 0.33)); }
+  function gem(p, x, y, r, col) {
+    var P = GP[col], X = n(x), Y = n(y);
+    var o = '<circle cx="' + n(x + SDX * 0.35) + '" cy="' + n(y + SDY * 0.35) + '" r="' + r + '" fill="' + SHC + '"/>';
+    if (!P) return o + '<circle cx="' + X + '" cy="' + Y + '" r="' + r + '" fill="' + col + '" stroke="' + GE + '" stroke-width=".45"/>';
+    var gloss = '<ellipse cx="' + n(x - r * 0.34) + '" cy="' + n(y - r * 0.38) + '" rx="' + n(r * 0.3) + '" ry="' + n(r * 0.16) + '" transform="rotate(-38 ' + n(x - r * 0.34) + ' ' + n(y - r * 0.38) + ')" fill="#fff" opacity=".92"/>';
+    if (r < 2.2) {
+      o += '<circle cx="' + X + '" cy="' + Y + '" r="' + r + '" fill="' + gemFill(p, col) + '" stroke="' + GE + '" stroke-width=".4"/>' + gloss;
+      return o + '<circle cx="' + n(x + r * 0.4) + '" cy="' + n(y + r * 0.4) + '" r="' + n(r * 0.1) + '" fill="#fff" opacity=".6"/>';
+    }
+    var k, A = [], T = [], tr = r * 0.5, sw = n(Math.max(0.1, r * 0.045));
+    for (k = 0; k < 8; k++) {
+      var an = (k * 45 - 22.5) * Math.PI / 180;
+      A.push([x + Math.cos(an) * r * 1.02, y + Math.sin(an) * r * 1.02]);
+      T.push([x + Math.cos(an) * tr, y + Math.sin(an) * tr]);
+    }
+    function pt(q) { return n(q[0]) + ',' + n(q[1]); }
+    o += '<circle cx="' + X + '" cy="' + Y + '" r="' + n(r * 1.04) + '" fill="' + tone(P, 0.12) + '" stroke="' + GE + '" stroke-width=".45"/>';
+    var facets = [];
+    for (k = 0; k < 8; k++) {
+      var mid = k * 45 * Math.PI / 180, L = -135 * Math.PI / 180;
+      var t = (Math.cos(mid - L) + 1) / 2 + (k % 2 ? 0.1 : -0.08);
+      t = Math.max(0.02, Math.min(1, t));
+      var poly = pt(A[k]) + ' ' + pt(A[(k + 1) % 8]) + ' ' + pt(T[(k + 1) % 8]) + ' ' + pt(T[k]);
+      facets.push(poly);
+      o += '<polygon points="' + poly + '" fill="' + tone(P, t) + '"/>';
+    }
+    o += '<polygon points="' + T.map(pt).join(' ') + '" fill="' + tone(P, 0.6) + '"/>';
+    o += '<polygon points="' + pt(T[4]) + ' ' + pt(T[5]) + ' ' + pt(T[6]) + ' ' + pt(T[7]) + ' ' + X + ',' + Y + '" fill="' + P.l + '" opacity=".5"/>';
+    var edges = 'M' + T.map(pt).join('L') + 'Z';
+    for (k = 0; k < 8; k++) edges += 'M' + pt(T[k]) + 'L' + pt(A[k]);
+    o += '<path d="' + edges.replace(/,/g, ' ') + '" fill="none" stroke="#fff" stroke-opacity=".42" stroke-width="' + sw + '" stroke-linejoin="round"/>';
+    if (SPARK) { // two facets catch the light and flash
+      gc++;
+      [1, 5].forEach(function (f, j) {
+        o += '<polygon class="gfx" style="--d:' + (((gc * 0.73 + j * 1.9) % 4.6).toFixed(2)) + 's;--t:' + (2.6 + ((gc + j) % 3) * 0.7).toFixed(1) + 's" points="' + facets[f] + '" fill="#fff"/>';
+      });
+    }
+    o += '<path d="M' + n(x + Math.cos(-2.9) * r * 0.86) + ' ' + n(y + Math.sin(-2.9) * r * 0.86) + 'A' + n(r * 0.86) + ' ' + n(r * 0.86) + ' 0 0 1 ' + n(x + Math.cos(-1.75) * r * 0.86) + ' ' + n(y + Math.sin(-1.75) * r * 0.86) + '" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="' + n(Math.max(0.2, r * 0.08)) + '" stroke-linecap="round"/>';
+    o += gloss + '<circle cx="' + n(x + r * 0.4) + '" cy="' + n(y + r * 0.42) + '" r="' + n(Math.max(0.2, r * 0.09)) + '" fill="#fff" opacity=".6"/>';
+    if (SPARK && gc % 2 === 0) o += sparkle(x - r * 0.3, y - r * 0.34, Math.max(0.6, Math.min(1.1, r * 0.28)));
+    return o;
+  }
+  function setGem(p, x, y, r, col) { // a stone in a little brass bezel
+    return '<circle cx="' + n(x + SDX * 0.35) + '" cy="' + n(y + SDY * 0.35) + '" r="' + n(r + 1) + '" fill="' + SHC + '"/><circle cx="' + n(x) + '" cy="' + n(y) + '" r="' + n(r + 0.95) + '" fill="url(#' + p + 'brass)" stroke="' + GE + '" stroke-width=".45"/>' + gem(p, x, y, r, col);
+  }
+  function along(d, gap, off) { // points spaced evenly along a run of cubic curves
+    var v = d.match(/-?\d+(?:\.\d+)?/g).map(Number), cur = [v[0], v[1]], pts = [cur], i, j;
+    for (i = 2; i + 5 < v.length; i += 6) {
+      var p0 = cur, p1 = [v[i], v[i + 1]], p2 = [v[i + 2], v[i + 3]], p3 = [v[i + 4], v[i + 5]];
+      for (j = 1; j <= 30; j++) {
+        var t = j / 30, u = 1 - t;
+        pts.push([u * u * u * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t * t * t * p3[0], u * u * u * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t * t * t * p3[1]]);
+      }
+      cur = p3;
+    }
+    var out = [], acc = 0, next = off || 0;
+    for (i = 1; i < pts.length; i++) {
+      var seg = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      while (acc + seg >= next) { var f = (next - acc) / seg; out.push([pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f]); next += gap; }
+      acc += seg;
+    }
+    return out;
+  }
+  function stonesAlong(p, d, gap, r) { // red and green stones set along a chain
+    var o = '';
+    along(d, gap, gap * 0.5).forEach(function (q, i) { o += setGem(p, q[0], q[1], r, i % 2 ? GRN : RED); });
+    return o;
+  }
+  function chokerStones(p) { // the choker's ring of stones, set round the ellipse
+    var o = '', c = Math.cos(-8 * Math.PI / 180), sn = Math.sin(-8 * Math.PI / 180);
+    for (var k = 0; k < 12; k++) {
+      var a = k * Math.PI / 6 + 0.2, dx = 24 * Math.cos(a), dy = 9 * Math.sin(a);
+      o += setGem(p, -14 + dx * c - dy * sn, -99 + dx * sn + dy * c, 2.4, k % 2 ? GRN : RED);
+    }
+    return o;
+  }
+  function kundan(p, x, y, r, col) { // a gold bezel set with a stone and a ring of pearls
+    var o = '<circle cx="' + n(x) + '" cy="' + n(y) + '" r="' + n(r + 0.8) + '" fill="url(#' + p + 'brass)" stroke="' + GE + '" stroke-width=".6"/>';
+    for (var k = 0; k < 9; k++) o += '<circle cx="' + n(x + Math.cos(k * 0.698) * r * 0.78) + '" cy="' + n(y + Math.sin(k * 0.698) * r * 0.78) + '" r="' + n(r * 0.16) + '" fill="url(#' + p + 'pearl)"/>';
+    o += '<circle cx="' + n(x) + '" cy="' + n(y) + '" r="' + n(r * 0.6) + '" fill="none" stroke="' + GE + '" stroke-width=".4" stroke-dasharray=".6 1.1" opacity=".75"/>';
+    return o + gem(p, x, y, r * 0.46, col);
+  }
+  function strings(p, x, y, xs, len) { // short pearl strings ending in a bead
+    var o = '';
+    xs.forEach(function (dx, i) {
+      var l = len + (i % 2) * 4;
+      o += '<path d="M' + n(x + dx) + ' ' + y + 'V' + n(y + l) + '" stroke="#C9953A" stroke-width=".7"/><path d="M' + n(x + dx) + ' ' + y + 'V' + n(y + l) + '" stroke="#F6EEDD" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="0.1 3"/><circle cx="' + n(x + dx) + '" cy="' + n(y + l + 1.6) + '" r="2" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".3"/>';
+    });
+    return o;
+  }
+  /* the rani haar's pendant: a gold shield, kundan centre, green stones, a pearl edge and a fringe. Origin at the top ring. */
+  function rani(p, x, y, s) {
+    var sh = 'M-15 4C-20 16-16 32 0 44C16 32 20 16 15 4C8 8-8 8-15 4Z';
+    var o = '<g transform="translate(' + n(x) + ' ' + n(y) + ') scale(' + s + ')">';
+    o += '<circle r="3.4" fill="none" stroke="' + GE + '" stroke-width="2.4"/><circle r="3.4" fill="none" stroke="' + GD + '" stroke-width="1.5"/>';
+    o += '<path d="' + sh + '" fill="url(#' + p + 'brass)" stroke="' + GE + '" stroke-width=".9"/>';
+    o += '<path d="M-11 7C-14 17-11 29 0 38C11 29 14 17 11 7" fill="none" stroke="#FFF1BD" stroke-width=".6" opacity=".8"/>';
+    o += '<path d="' + sh + '" fill="none" stroke="#F6EEDD" stroke-width="2.1" stroke-linecap="round" stroke-dasharray="0.1 3.2"/>';
+    o += '<path d="' + sh + '" transform="translate(0 .8) scale(.84 .86)" fill="none" stroke="' + GE + '" stroke-width=".6" stroke-dasharray="1.2 1.6" opacity=".6"/>';
+    o += kundan(p, 0, 15, 7, RED) + gem(p, -8, 27, 2.6, GRN) + gem(p, 8, 27, 2.6, GRN) + gem(p, 0, 31, 3, GRN) + gem(p, -5, 21, 1.7, "#F6EEDD") + gem(p, 5, 21, 1.7, "#F6EEDD");
+    o += strings(p, 0, 44, [-10, -5, 0, 5, 10], 6);
+    return o + '</g>';
+  }
+  function lotusPend(p, x, y, s) { // a flat lotus medallion
+    var o = '<g transform="translate(' + n(x) + ' ' + n(y) + ') scale(' + s + ')">';
+    for (var k = 0; k < 8; k++) o += '<ellipse cx="0" cy="-9" rx="4.6" ry="8" transform="rotate(' + k * 45 + ')" fill="url(#' + p + 'brassV)" stroke="' + GE + '" stroke-width=".6"/>';
+    return o + kundan(p, 0, 0, 7, GRN) + '</g>';
+  }
+  function payal(p, cx, cy, rx, ry, rot) { // an anklet: a ring of gold with little bells
+    var t = rot ? ' transform="rotate(' + rot + ' ' + n(cx) + ' ' + n(cy) + ')"' : '', o = '<g' + t + '>';
+    o += '<ellipse cx="' + n(cx + SDX * 0.8) + '" cy="' + n(cy + SDY * 0.9) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="' + SHC + '" stroke-width="2"/>';
+    o += '<ellipse cx="' + n(cx) + '" cy="' + n(cy) + '" rx="' + rx + '" ry="' + ry + '" fill="none" stroke="#C9953A" stroke-width="2"/>';
+    for (var k = 0; k < 14; k++) { var an = k * 0.449, bx = cx + Math.cos(an) * rx, by = cy + Math.sin(an) * ry + 2.2; o += '<circle cx="' + n(bx) + '" cy="' + n(by) + '" r="1.9" fill="url(#' + p + 'brass)" stroke="' + GE + '" stroke-width=".4"/><path d="M' + n(bx - 1) + ' ' + n(by + 0.4) + 'H' + n(bx + 1) + '" stroke="' + GE + '" stroke-width=".4"/>'; if (SPARK && k % 5 === 2) o += sparkle(bx - 0.6, by - 0.7, 0.6); }
+    return o + '</g>';
+  }
+  function bangleStack(cols, cx, cy, rx, ry, rot, step) {
+    var o = '';
+    cols.forEach(function (c, i) { o += ring(cx, cy - i * step, rx, ry, rot, c, 2.8, i === 0); });
+    return o;
+  }
+  function coin(x, y) {
+    return '<ellipse cx="' + n(x + SDX * 0.8) + '" cy="' + n(y + SDY * 0.9) + '" rx="5.4" ry="2.6" fill="' + SHC + '"/><ellipse cx="' + n(x) + '" cy="' + n(y + 1) + '" rx="5.4" ry="2.6" fill="#8A5A12"/><ellipse cx="' + n(x) + '" cy="' + n(y) + '" rx="5.4" ry="2.6" fill="' + GD + '" stroke="#8A5A12" stroke-width=".5"/><ellipse cx="' + n(x) + '" cy="' + n(y) + '" rx="3" ry="1.3" fill="none" stroke="#8A5A12" stroke-width=".5"/>' + (SPARK && (rc++ % 2 === 1) ? sparkle(x - 2.4, y - 0.7, 0.65) : '');
+  }
+  function lyingJhumka(p, x, y, s, rot) {
+    return shadowed(p, '<g transform="rotate(' + rot + ' ' + n(x) + ' ' + n(y) + ')">' + jhumka(p, x, y, s, 0).replace('class="keyswing"', 'class="lying"') + '</g>');
+  }
+  var PEARL_THREAD = function (d, dash) { return '<path d="' + d + '" fill="none" stroke="rgba(18,5,2,.3)" stroke-width="4.4" stroke-linecap="round" stroke-dasharray="0.1 ' + dash + '" transform="translate(' + SDX * 0.9 + ' ' + SDY * 0.9 + ')"/><path d="' + d + '" fill="none" stroke="#F6EEDD" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 ' + dash + '"/><path d="' + d + '" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="0.1 ' + dash + '" transform="translate(-.7 -.8)"/>'; };
+
+  /* what lies in the chest, heaped above the rim and laid over one another: silks, a choker and haar, bangles, jhumkas,
+     a kada, anklets, a tikka, rings and coins */
+  function heap(p) {
+    var o = '';
+    // silks: a marigold one behind, a magenta one on the left, a teal one on the right
+    o += '<path d="M-63 -66C-63 -92 -52 -104 -36 -102C-22 -112 -2 -106 12 -110C28 -114 46 -104 56 -98C63 -94 64 -80 64 -66Z" fill="#D98A2B" stroke="#8A4E10" stroke-width=".8"/>';
+    o += '<path d="M-52 -98C-44 -90 -48 -78 -42 -68M-24 -104C-18 -94 -24 -80 -18 -68M6 -108C12 -96 6 -82 12 -68M34 -106C40 -96 34 -80 42 -68" fill="none" stroke="#A9640F" stroke-width="2.4" opacity=".55"/>';
+    o += '<path d="M-64 -66C-64 -84 -54 -94 -38 -92C-26 -90 -18 -80 -10 -66Z" fill="#9C2A5A" stroke="#5E1038" stroke-width=".8"/><path d="M-52 -90C-48 -82 -52 -74 -46 -68M-36 -91C-32 -82 -34 -74 -28 -68" fill="none" stroke="#5E1038" stroke-width="2" opacity=".5"/>';
+    o += '<path d="M24 -66C26 -86 38 -96 52 -92C60 -90 64 -80 64 -66Z" fill="#14585B" stroke="#0A3436" stroke-width=".8"/><path d="M36 -92C40 -84 36 -76 40 -68M50 -92C54 -84 50 -76 56 -68" fill="none" stroke="#0A3436" stroke-width="2" opacity=".5"/>';
+    o += '<path d="M-60 -74C-40 -80 -20 -72 0 -77C20 -82 40 -74 60 -79" fill="none" stroke="#F4D98C" stroke-width="1.6" stroke-dasharray="1.2 3.4" stroke-linecap="round"/>';
+    // a choker standing against the back, with a pearl fringe, and a kundan plate
+    o += '<g filter="url(#' + p + 'ds)"><ellipse cx="-14" cy="-99" rx="24" ry="9" fill="none" stroke="#5E3C12" stroke-width="7.4" transform="rotate(-8 -14 -99)"/><ellipse cx="-14" cy="-99" rx="24" ry="9" fill="none" stroke="url(#' + p + 'brass)" stroke-width="6.2" transform="rotate(-8 -14 -99)"/>';
+    o += chokerStones(p) + '</g>';
+    o += shadowed(p, kundan(p, 17, -95, 7.5, RED)) + shadowed(p, lotusPend(p, -46, -92, 0.5));
+    // the rani haar, in loose loops with a pearl rope alongside
+    var haar = "M-60 -86C-42 -106 -22 -70 -2 -84C16 -96 34 -68 60 -88";
+    o += PEARL_THREAD("M-60 -80C-40 -98 -20 -64 0 -77C18 -90 36 -62 60 -82", 5.2);
+    o += chainPath(haar, 3.4, GD);
+    o += stonesAlong(p, haar, 8.6, 2.3);
+    // bangle stacks and a leaning stack
+    o += bangleStack(["#E3B04B", RED, "#E3B04B", GRN, "#E3B04B", RED, "#E3B04B", GRN], -47, -72, 14, 5.2, -4, 2.7);
+    o += bangleStack(["#E3B04B", GRN, "#E3B04B", RED, "#E3B04B", GRN, RED], 45, -71, 13.5, 5, 6, 2.8);
+    o += bangleStack([RED, "#E3B04B", GRN, "#E3B04B"], -16, -73, 10.5, 4.2, 10, 2.6);
+    // anklets, kadas
+    o += payal(p, 22, -76, 15, 5.4, -6);
+    o += ring(-10, -92, 16, 7.4, -22, GD, 3.4, true);
+    o += ring(28, -91, 14, 6.4, 20, GD, 3.2, true);
+    // jhumkas lying on their sides, one over the other
+    o += lyingJhumka(p, -6, -86, 0.2, 80);
+    o += lyingJhumka(p, 8, -88, 0.2, -98);
+    o += lyingJhumka(p, -34, -84, 0.2, 100);
+    o += lyingJhumka(p, 44, -86, 0.2, -80);
+    // maang tikka
+    o += chainPath("M-26 -100C-22 -94 -14 -92 -8 -90", 2.4, GD);
+    o += '<path d="M-6 -90C-12 -86 -12 -80 -6 -77C0 -80 0 -86 -6 -90Z" fill="url(#' + p + 'gemR)" stroke="' + GE + '" stroke-width=".7"/><ellipse cx="-8" cy="-85" rx="1.1" ry="2.6" transform="rotate(14 -8 -85)" fill="#fff" opacity=".8"/><circle cx="-6" cy="-74.5" r="2.6" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".4"/><circle cx="-6" cy="-91" r="3" fill="url(#' + p + 'brass)" stroke="' + GE + '" stroke-width=".5"/>';
+    // a pendant of the haar on top, rings and coins
+    o += shadowed(p, lotusPend(p, 2, -79, 0.56));
+    [[-23, -80, RED], [-22, -75, GRN], [16, -83, GRN], [33, -76, RED]].forEach(function (r) { o += '<circle cx="' + r[0] + '" cy="' + r[1] + '" r="3.2" fill="none" stroke="' + GE + '" stroke-width="2.2"/><circle cx="' + r[0] + '" cy="' + r[1] + '" r="2.8" fill="none" stroke="' + GD + '" stroke-width="1.4"/>' + gem(p, r[0], r[1] - 2.8, 2.4, r[2]); });
+    [[-60, -80], [-55, -76.5], [58, -79], [54, -75.5], [60, -74], [-1, -72], [5, -70.5], [35, -72], [-30, -71]].forEach(function (c) { o += coin(c[0], c[1]); });
+    return o;
+  }
+  /* jewellery that has slid over the lip and onto the carpet */
+  function floorJewels(p) {
+    var o = '';
+    o += bangleStack([GD, RED, GD], -86, 12, 13, 4.8, -3, 2.6) + ring(-96, 24, 12, 4.4, 8, GRN, 2.6, true) + coin(-74, 20) + coin(-70, 25) + coin(-80, 30);
+    o += payal(p, 90, 9, 16, 5.6, 4) + ring(92, 20, 12, 4.4, -6, RED, 2.6, true) + coin(76, 14) + coin(106, 17) + coin(101, 22);
+    return o;
+  }
+  function spillOver(p) {
+    var o = '';
+    // the rani haar, over the lip on the right with its pendant hanging down the front
+    var ch = "M-2 -78C-2 -74 -2 -72 0 -70C4 -52 12 -41 28 -39C46 -41 54 -52 58 -70C60 -72 60 -74 60 -78";
+    o += '<path d="' + ch + '" fill="none" stroke="rgba(18,5,2,.3)" stroke-width="5" transform="translate(1 2)"/>';
+    o += PEARL_THREAD("M6 -74C8 -66 12 -52 28 -50C44 -52 50 -66 54 -74", 5.2);
+    o += chainPath(ch, 3.6, GD);
+    o += stonesAlong(p, ch, 9.6, 2.4);
+    o += shadowed(p, rani(p, 28, -40, 0.95));
+    // a jhumka hanging by its hook over the lip, on the left
+    o += shadowed(p, jhumka(p, -50, -73, 0.3, 0.4));
+    // bangles slid off the corner: two on the lip, one tipping over
+    o += ring(60, -77, 13, 5, 18, GD, 3, true) + ring(56, -81, 12.5, 4.8, -14, RED, 2.8, true);
+    o += '<g transform="rotate(64 66 -58)">' + ring(66, -58, 12, 5.2, 0, GD, 3, true) + '</g>';
+    return o;
+  }
+  function spillSet(p, front) {
+    // pearls inside the chest are mostly hidden by the jewellery: only the last stretch of each strand and a few loose ones remain
+    var keep = SPILL.map(function (b, i) {
+      if (b[3] >= 0) return b[2] >= -4.5;
+      return b[2] >= 0 || (b[2] > -30 && i % 3 === 0 && b[1] > 66);
+    });
+    var items = [];
+    SPILL.forEach(function (b, i) {
+      if (!keep[i] || (b[2] >= -4.5) !== front) return;
+      items.push({ d: b[2] + SK * b[1], b: b });
+    });
+    for (var i = 0; i < SPILL.length - 1; i++) { // the thread between neighbouring pearls
+      var a = SPILL[i], c = SPILL[i + 1];
+      if (a[3] < 0 || a[3] !== c[3] || !keep[i] || !keep[i + 1]) continue;
+      if (((a[2] + c[2]) / 2 >= -4.5) !== front) continue;
+      items.push({ d: Math.min(a[2] + SK * a[1], c[2] + SK * c[1]) - 0.01, seg: [a, c] });
+    }
+    items.sort(function (u, v) { return u.d - v.d; });
+    var o = "";
+    items.forEach(function (it) { // shadows first: a flat oval where a pearl touches the floor, a small offset one elsewhere
+      var b = it.b; if (!b) return;
+      if (b[1] < b[4] + 0.6) o += '<ellipse cx="' + n(b[0] + SDX * 0.9) + '" cy="' + n(SK * b[2] + SDY * 0.45) + '" rx="' + n(b[4] + 1) + '" ry="' + n(b[4] * 0.6) + '" fill="' + SHC + '"/>';
+    });
+    items.forEach(function (it) {
+      if (it.seg) {
+        var a = it.seg[0], c = it.seg[1], x1 = n(a[0]), y1 = n(sy(a)), x2 = n(c[0]), y2 = n(sy(c));
+        o += '<path d="M' + x1 + ' ' + y1 + 'L' + x2 + ' ' + y2 + '" stroke="#3A1809" stroke-opacity=".55" stroke-width="1.9" stroke-linecap="round"/><path d="M' + x1 + ' ' + y1 + 'L' + x2 + ' ' + y2 + '" stroke="#E3B04B" stroke-width="1" stroke-linecap="round"/>';
+        return;
+      }
+      var b = it.b;
+      if (b[1] >= b[4] + 0.6) {
+        o += '<circle cx="' + n(b[0] + SDX) + '" cy="' + n(sy(b) + SDY) + '" r="' + b[4] + '" fill="' + SHC + '"/>';
+      }
+      o += pearlDot(p, b);
+      if (SPARK && (pc++ % 3 === 0)) o += sparkle(b[0] - b[4] * 0.38, sy(b) - b[4] * 0.42, 0.2 + b[4] * 0.12);
+    });
+    return o;
+  }
+  // the open mouth of the chest, seen from above: rim, dark lining, floor of the tray, and what lies in it
+  function cavity(p) {
+    var o = '<clipPath id="' + p + 'spclip"><rect x="-70" y="-150" width="140" height="80.2"/></clipPath>';
+    o += '<g clip-path="url(#' + p + 'spclip)">';
+    o += '<rect x="-70" y="-98.6" width="140" height="30" fill="#8A4A24"/>';
+    o += '<rect x="-63" y="-96.2" width="126" height="26" fill="#3F0A18"/>';
+    o += '<rect x="-63" y="-88.2" width="126" height="18" fill="#7A1230"/>';
+    o += '<path d="M-63 -88.2H63" stroke="#2A0610" stroke-width="1.2" opacity=".6"/>';
+    o += heap(p);
+    o += spillSet(p, false);
+    o += '</g>';
+    return o;
+  }
+  function spillFront(p) { return floorJewels(p) + spillSet(p, true) + spillOver(p); }
+
   /* ---------- sandook: carved wooden chest with brass fittings ----------
      origin at bottom centre. open = lid raised, pearl necklace spilling out and onto the floor. */
   function sandook(p, open) {
     var GOLD = "#E3B04B", o = '<g class="sandook">';
     if (open) {
+      o += '<g transform="translate(0 -24)">';
       o += '<path d="M-64 -72L-58 -126C-30 -136 30 -136 58 -126L64 -72Z" fill="#6B2F16" stroke="#3A1809" stroke-width="1.2"/>';
       o += '<path d="M-54 -78L-50 -119C-26 -127 26 -127 50 -119L54 -78Z" fill="#8A1A33"/>';
       o += '<path d="M-47 -83L-44.5 -113C-24 -120 24 -120 44.5 -113L47 -83Z" fill="none" stroke="' + GOLD + '" stroke-width="1.2"/>';
@@ -345,12 +672,12 @@
         var y = -100 - (i === 1 ? 3 : 0);
         o += '<path d="M' + x + ' ' + (y - 8) + 'L' + (x + 6) + ' ' + y + 'L' + x + ' ' + (y + 8) + 'L' + (x - 6) + ' ' + y + 'Z" fill="none" stroke="' + GOLD + '" stroke-width="1"/><circle cx="' + x + '" cy="' + y + '" r="1.8" fill="' + GOLD + '"/>';
       });
-      o += '<path d="M-58 -126C-30 -136 30 -136 58 -126" fill="none" stroke="url(#' + p + 'brass)" stroke-width="3.2"/>';
+      o += '<path d="M-58 -126C-30 -136 30 -136 58 -126" fill="none" stroke="url(#' + p + 'brass)" stroke-width="3.2"/></g>';
     }
     // body
     o += '<rect x="-70" y="-68" width="140" height="68" rx="3" fill="url(#' + p + 'wood)" stroke="#3A1809" stroke-width="1.2"/>';
     o += '<path d="M-70 -34H70" stroke="#3A1809" stroke-width="1" opacity=".55"/>';
-    if (open) o += '<path d="M-68 -68L-63 -76L63 -76L68 -68Z" fill="#7A1230"/>';
+    if (open) o += cavity(p);
     // brass bands, straps, corner pieces, lock plate
     o += '<rect x="-70" y="-70" width="140" height="6" fill="url(#' + p + 'brassV)" stroke="#6B4515" stroke-width=".6"/>';
     o += '<rect x="-70" y="-5" width="140" height="5" fill="url(#' + p + 'brassV)" stroke="#6B4515" stroke-width=".6"/>';
@@ -368,21 +695,7 @@
       [-46, 46].forEach(function (x) { o += '<path d="M' + (x - 4) + ' -68C' + (x - 4) + ' -90 ' + (x - 3) + ' -98 ' + (x - 2) + ' -100L' + (x + 2) + ' -100C' + (x + 3) + ' -98 ' + (x + 4) + ' -90 ' + (x + 4) + ' -68Z" fill="url(#' + p + 'brassH)" stroke="#6B4515" stroke-width=".5"/>'; });
       o += '<path d="M-72 -70H72" stroke="url(#' + p + 'brass)" stroke-width="3"/>';
     }
-    if (open) {
-      // heap of pearls in the chest and the necklace coming over the edge
-      var r = seeded(5);
-      for (var i = 0; i < 16; i++) {
-        var px = -34 + i * 4.4 + (r() - 0.5) * 3, py = -74 - Math.sin(i / 15 * Math.PI) * 6 - r() * 3;
-        o += '<circle cx="' + n(px) + '" cy="' + n(py) + '" r="4.2" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".4"/>';
-      }
-      o += strand("M-8 -80C-6 -72 0 -66 -2 -56C-4 -44 -12 -36 -14 -22C-16 -8 -8 4 -22 12C-40 22 -64 14 -84 22C-104 30 -114 46 -96 52", 6);
-      o += strand("M-16 -78C-18 -66 -22 -58 -28 -46C-34 -34 -36 -18 -46 -4C-58 10 -80 6 -98 14", 5.2);
-      o += strand("M8 -80C12 -68 20 -58 26 -46C32 -32 34 -16 46 -4C60 10 82 8 102 18", 5.2);
-      o += '<g transform="translate(-96 52)"><path d="M0 0C-5.5 6 -5.5 13 0 17C5.5 13 5.5 6 0 0Z" fill="url(#' + p + 'brass)" stroke="#6B4515" stroke-width=".6"/><circle cx="0" cy="10" r="2.6" fill="#B3203A"/></g>';
-      [[-60, 20], [-42, 28], [66, 22], [86, 14], [50, 28], [-28, 32]].forEach(function (q) {
-        o += '<circle cx="' + q[0] + '" cy="' + q[1] + '" r="2.9" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".35"/>';
-      });
-    }
+    if (open) o += spillFront(p);
     return o + "</g>";
   }
 
@@ -642,7 +955,7 @@
 
   function hero() {
     var p = "h_", r = seeded(7), o = "", WL = 392;
-    o += '<svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-26 -24 552 728" role="img" aria-label="Kashi at dusk seen from a marble balcony: temples, palms and trees along the ghat, the river with swans and their reflections, a boat, and the setting sun" preserveAspectRatio="xMidYMid meet">';
+    o += '<svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-26 -24 552 728" role="img" aria-label="A riverside town at dusk seen from a marble balcony: temples, palms and trees, the river with swans and their reflections, a boat, and the setting sun" preserveAspectRatio="xMidYMid meet">';
     o += "<defs>" + common(p) + diyaDefs(p) +
       '<clipPath id="' + p + 'clip"><path d="' + ARCH + '"/></clipPath>' +
       '<clipPath id="' + p + 'rv"><rect x="0" y="' + WL + '" width="500" height="150"/></clipPath>' +
@@ -739,7 +1052,7 @@
     for (var i = 0; i < 10; i++) o += '<ellipse cx="0" cy="' + n(34 - 19) + '" rx="8" ry="14" transform="rotate(' + i * 36 + ' 0 34)" fill="' + GV + '" stroke="' + ED + '" stroke-width=".8"/>';
     o += '<circle cx="0" cy="34" r="16" fill="' + G + '" stroke="' + ED + '" stroke-width=".8"/>';
     for (var k = 0; k < 10; k++) o += '<circle cx="' + n(Math.cos(k * 0.628) * 12) + '" cy="' + n(34 + Math.sin(k * 0.628) * 12) + '" r="2.3" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".3"/>';
-    o += '<circle cx="0" cy="34" r="6.6" fill="#B3203A" stroke="' + ED + '" stroke-width=".7"/><circle cx="-1.8" cy="32" r="1.8" fill="#FFB7B7"/>';
+    o += gem(p, 0, 34, 6.6, RED);
     o += '<circle cx="0" cy="62" r="6" fill="' + G + '" stroke="' + ED + '" stroke-width=".7"/>';
     // bell
     var bell = "M-9 66C-9 60 9 60 9 66C16 72 46 90 52 150H-52C-46 90 -16 72 -9 66Z";
@@ -748,7 +1061,7 @@
     o += '<g clip-path="url(#' + p + 'bell' + n(x) + ')">';
     [-34, -17, 0, 17, 34].forEach(function (cx, i) {
       var yy = 116 + Math.abs(cx) * 0.18;
-      o += '<path d="M' + cx + ' ' + (yy - 22) + 'C' + (cx - 9) + ' ' + (yy - 8) + ' ' + (cx - 9) + ' ' + (yy + 14) + ' ' + cx + ' ' + (yy + 22) + 'C' + (cx + 9) + ' ' + (yy + 14) + ' ' + (cx + 9) + ' ' + (yy - 8) + ' ' + cx + ' ' + (yy - 22) + 'Z" fill="' + (i % 2 ? "#14585B" : "#B3203A") + '" stroke="#F4D98C" stroke-width="1.2"/>';
+      o += '<path d="M' + cx + ' ' + (yy - 22) + 'C' + (cx - 9) + ' ' + (yy - 8) + ' ' + (cx - 9) + ' ' + (yy + 14) + ' ' + cx + ' ' + (yy + 22) + 'C' + (cx + 9) + ' ' + (yy + 14) + ' ' + (cx + 9) + ' ' + (yy - 8) + ' ' + cx + ' ' + (yy - 22) + 'Z" fill="' + (i % 2 ? "#14585B" : "#B3203A") + '" stroke="#F4D98C" stroke-width="1.2"/><path d="M' + (cx - 3.4) + ' ' + (yy - 12) + 'C' + (cx - 6.2) + ' ' + (yy - 4) + ' ' + (cx - 6) + ' ' + (yy + 6) + ' ' + (cx - 3.6) + ' ' + (yy + 12) + '" fill="none" stroke="#fff" stroke-opacity=".42" stroke-width="1.8" stroke-linecap="round"/>';
       o += '<circle cx="' + cx + '" cy="' + yy + '" r="2.6" fill="#F4D98C"/>';
     });
     [92, 138].forEach(function (yy) { o += '<path d="M-60 ' + yy + 'H60" stroke="#F4D98C" stroke-width="2.2" stroke-dasharray="0.1 5" stroke-linecap="round"/>'; });
@@ -757,7 +1070,7 @@
     for (var b = -48; b <= 48; b += 12) {
       o += '<circle cx="' + b + '" cy="158" r="4.6" fill="' + G + '" stroke="' + ED + '" stroke-width=".6"/><path d="M' + b + ' 162V170" stroke="#C9953A" stroke-width="1"/><circle cx="' + b + '" cy="175" r="4.6" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".4"/>';
     }
-    o += '<path d="M0 164C-8 176 -8 192 0 197C8 192 8 176 0 164Z" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".5"/><circle cx="0" cy="164" r="3.6" fill="#B3203A" stroke="' + ED + '" stroke-width=".5"/>';
+    o += '<path d="M0 164C-8 176 -8 192 0 197C8 192 8 176 0 164Z" fill="url(#' + p + 'pearl)" stroke="#B3A68E" stroke-width=".5"/>' + gem(p, 0, 164, 3.6, RED);
     return o + '</g></g>';
   }
 
@@ -956,14 +1269,22 @@
 
   /* ---------- craft panel: lamp-lit sandook with the necklace spilling out ---------- */
   function craftScene() {
+    SPARK = true; spk = 0; gc = 0; rc = 0; pc = 0;
+    var out = craftBuild();
+    SPARK = false;
+    return out;
+  }
+  function craftBuild() {
     var p = "cs_";
-    return '<svg class="craft-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 440" role="img" aria-label="A carved sandook with a pearl necklace spilling out, lit by two brass lamps" preserveAspectRatio="xMidYMid meet"><defs>' + common(p) + diyaDefs(p) +
+    return '<svg class="craft-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 440" role="img" aria-label="A carved sandook with a pearl necklace spilling out, lit by two brass lamps" preserveAspectRatio="xMidYMid meet"><defs>' + common(p, true) + jewelDefs(p) + diyaDefs(p) +
       '<radialGradient id="' + p + 'glow" cx=".5" cy=".55" r=".55"><stop offset="0" stop-color="#F7C96A" stop-opacity=".5"/><stop offset="1" stop-color="#F7C96A" stop-opacity="0"/></radialGradient>' +
       '<pattern id="' + p + 'carp" width="26" height="16" patternUnits="userSpaceOnUse"><path d="M13 1L24 8L13 15L2 8Z" fill="none" stroke="#E3B04B" stroke-width="1" opacity=".5"/></pattern></defs>' +
       '<rect width="460" height="440" fill="#0E2A2D"/><ellipse class="halo" cx="230" cy="250" rx="230" ry="200" fill="url(#' + p + 'glow)"/>' +
-      '<path d="M0 336L460 336V440H0Z" fill="#7A1230"/><path d="M0 336L460 336V440H0Z" fill="url(#' + p + 'carp)"/><path d="M0 342H460" stroke="#E3B04B" stroke-width="2"/>' +
+      '<path d="M0 296L460 296V440H0Z" fill="#7A1230"/><path d="M0 296L460 296V440H0Z" fill="url(#' + p + 'carp)"/><path d="M0 302H460" stroke="#E3B04B" stroke-width="2"/>' +
+      '<ellipse class="lpool" cx="72" cy="412" rx="128" ry="36" fill="url(#' + p + 'lpool)"/><ellipse class="lpool" style="animation-delay:-1.3s" cx="398" cy="412" rx="128" ry="36" fill="url(#' + p + 'lpool)"/>' +
+      '<ellipse cx="242" cy="332" rx="168" ry="15" fill="rgba(6,1,1,.55)" filter="url(#' + p + 'blur)"/>' +
       '<g transform="translate(224 326) scale(1.72)">' + sandook(p, true) + '</g>' +
-      diya(p, 40, 382, 0.62, 0.3) + diya(p, 366, 382, 0.62, 1.2) + '</svg>';
+      diya(p, 40, 382, 0.62, 0.3, true) + diya(p, 366, 382, 0.62, 1.2, true) + '</svg>';
   }
 
   /* ---------- small marks ---------- */
@@ -984,6 +1305,161 @@
       diya(p, 6, 6, 0.62, 0) + diya(p, 106, 6, 0.62, 0.7) + diya(p, 206, 6, 0.62, 1.4) + '</svg>';
   }
 
+  /* ---------- an urli: a shallow antique brass bowl of water with a lily and small floating lamps ---------- */
+  function waterLily(p, x, y, s) { // a lily seen from a little above, resting on its pad. base at the water line.
+    var o = '<g transform="translate(' + n(x) + ' ' + n(y) + ') scale(' + s + ')">';
+    o += '<g class="pad"><ellipse cx="0" cy="5" rx="52" ry="13" fill="url(#' + p + 'pad)"/><path d="M0 5L46 -1" stroke="#0F2D24" stroke-width="1.1" opacity=".5"/><path d="M0 5L-34 -4" stroke="#0F2D24" stroke-width=".8" opacity=".4"/></g>';
+    var pet = function (len, wid, fill) { return '<path d="M0 0C' + n(-wid) + ' ' + n(-len * 0.3) + ' ' + n(-wid * 0.9) + ' ' + n(-len * 0.78) + ' 0 ' + n(-len) + 'C' + n(wid * 0.9) + ' ' + n(-len * 0.78) + ' ' + n(wid) + ' ' + n(-len * 0.3) + ' 0 0Z" fill="' + fill + '" stroke="#B9577E" stroke-width=".5" stroke-opacity=".55"/><path d="M0 -3L0 ' + n(-len * 0.8) + '" stroke="#D77F9F" stroke-width=".4" opacity=".45"/>'; };
+    var k, a, ring = function (cnt, off, len, wid, sq, lift, fill) {
+      var list = [];
+      for (k = 0; k < cnt; k++) { a = off + k * 360 / cnt; list.push({ a: a, d: Math.sin(a * Math.PI / 180) }); }
+      list.sort(function (u, v) { return u.d - v.d; });
+      list.forEach(function (q) { o += '<g transform="translate(0 ' + lift + ') scale(1 ' + sq + ') rotate(' + q.a + ')">' + pet(len, wid, fill) + '</g>'; });
+    };
+    // the back petals and the flat outer ring first, then a raised ring, then an upright cup
+    ring(10, 0, 40, 9.5, 0.34, 0, 'url(#' + p + 'petalD)');
+    ring(8, 22, 33, 9.5, 0.62, -3, 'url(#' + p + 'petal)');
+    o += '<ellipse cx="0" cy="-4" rx="9" ry="4" fill="#E9B24A"/>';
+    [[-50, 26], [-26, 31], [0, 34], [26, 31], [50, 26]].forEach(function (q) {
+      o += '<g transform="translate(0 -5) rotate(' + q[0] + ')">' + pet(q[1], 8.5, 'url(#' + p + 'petal)') + '</g>';
+    });
+    for (k = 0; k < 9; k++) o += '<circle cx="' + n(Math.sin(k * 0.9) * 4.5) + '" cy="' + n(-6 - (k % 3) * 1.6) + '" r=".9" fill="#F4C75A"/>';
+    return o + '</g>';
+  }
+  function urli() {
+    var p = 'ur_', r = seeded(41), o = '', i, CX = 210;
+    function hw(y) { // half-width of the bowl at height y (the curve of its side)
+      var best = 188, bd = 1e9;
+      for (var t = 0; t <= 1; t += 0.01) {
+        var u = 1 - t, yy = u * u * u * 102 + 3 * u * u * t * 160 + 3 * u * t * t * 196 + t * t * t * 202, xx = u * u * u * 22 + 3 * u * u * t * 26 + 3 * u * t * t * 76 + t * t * t * 146;
+        if (Math.abs(yy - y) < bd) { bd = Math.abs(yy - y); best = CX - xx; }
+      }
+      return best;
+    }
+    function bandArc(y, wd) { var h = hw(y) * (wd || 1); return 'M' + n(CX - h) + ' ' + y + 'A' + n(h) + ' ' + n(h * 38 / 188) + ' 0 0 0 ' + n(CX + h) + ' ' + y; }
+    var body = 'M22 100C26 160 76 196 146 202L274 202C344 196 394 160 398 100A188 38 0 0 1 22 100Z';
+    function ellPath(rx, ry) { return 'M' + n(CX - rx) + ' 100A' + rx + ' ' + ry + ' 0 1 1 ' + n(CX + rx) + ' 100A' + rx + ' ' + ry + ' 0 1 1 ' + n(CX - rx) + ' 100Z'; }
+    /* raised metal: a dark edge falling to the lower right, a bright edge on the upper left, and a face that shades from light to dark.
+       tf is applied first, so the shadow always falls the same way however the shape is turned. */
+    function emb(geom, tf, tag) {
+      tag = tag || 'path'; tf = tf || '';
+      return '<' + tag + ' ' + geom + ' transform="translate(1 1.3) ' + tf + '" fill="rgba(24,9,0,.42)"/><' + tag + ' ' + geom + ' transform="translate(-.7 -.8) ' + tf + '" fill="#FFF1BD" opacity=".75"/><' + tag + ' ' + geom + (tf ? ' transform="' + tf + '"' : '') + ' fill="url(#' + p + 'rel)"/>';
+    }
+    function ridge(d, w) { // a raised moulding
+      return '<path d="' + d + '" transform="translate(0 1.3)" fill="none" stroke="rgba(24,9,0,.5)" stroke-width="' + w + '" stroke-linecap="round"/><path d="' + d + '" fill="none" stroke="#C9953A" stroke-width="' + w + '" stroke-linecap="round"/><path d="' + d + '" transform="translate(0 -.6)" fill="none" stroke="#FFF1BD" stroke-width="' + n(w * 0.38) + '" stroke-linecap="round" opacity=".8"/>';
+    }
+    function beadRow(d, w, gap) { // a row of raised beads
+      var da = ' stroke-linecap="round" stroke-dasharray="0.1 ' + gap + '"';
+      return '<path d="' + d + '" transform="translate(.8 1.1)" fill="none" stroke="rgba(24,9,0,.5)" stroke-width="' + w + '"' + da + '/><path d="' + d + '" fill="none" stroke="#D5A246" stroke-width="' + w + '"' + da + '/><path d="' + d + '" transform="translate(-.5 -.6)" fill="none" stroke="#FFF6CF" stroke-width="' + n(w * 0.42) + '"' + da + '/>';
+    }
+    function lp(L, W) { // a lotus petal: full shoulders narrowing to a soft, pointed tip
+      return 'M' + n(-W) + ' 0C' + n(-W * 1.0) + ' ' + n(-L * 0.46) + ' ' + n(-W * 0.62) + ' ' + n(-L * 0.78) + ' ' + n(-W * 0.07) + ' ' + n(-L * 0.99) + 'Q0 ' + n(-L * 1.2) + ' ' + n(W * 0.07) + ' ' + n(-L * 0.99) + 'C' + n(W * 0.62) + ' ' + n(-L * 0.78) + ' ' + n(W * 1.0) + ' ' + n(-L * 0.46) + ' ' + n(W) + ' 0Z';
+    }
+    o += '<svg class="urli-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 262" role="img" aria-label="An antique brass urli holding a water lily and small floating lamps" focusable="false"><defs>' + common(p) + diyaDefs(p) +
+      '<clipPath id="' + p + 'body"><path d="' + body + '"/></clipPath>' +
+      '<clipPath id="' + p + 'wclip"><ellipse cx="' + CX + '" cy="106" rx="166" ry="26"/></clipPath>' +
+      '<linearGradient id="' + p + 'wat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A7570"/><stop offset=".5" stop-color="#155250"/><stop offset="1" stop-color="#0B2B2D"/></linearGradient>' +
+      '<linearGradient id="' + p + 'wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E1A08"/><stop offset=".6" stop-color="#6B4515"/><stop offset="1" stop-color="#A97A28"/></linearGradient>' +
+      '<linearGradient id="' + p + 'edge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1E0F03" stop-opacity=".62"/><stop offset=".2" stop-color="#1E0F03" stop-opacity=".08"/><stop offset=".62" stop-color="#1E0F03" stop-opacity="0"/><stop offset="1" stop-color="#1E0F03" stop-opacity=".66"/></linearGradient>' +
+      '<linearGradient id="' + p + 'pat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1606" stop-opacity="0"/><stop offset=".55" stop-color="#2A1606" stop-opacity=".12"/><stop offset="1" stop-color="#2A1606" stop-opacity=".58"/></linearGradient>' +
+      '<linearGradient id="' + p + 'rel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6D983"/><stop offset=".4" stop-color="#D2A03C"/><stop offset=".75" stop-color="#9C6C22"/><stop offset="1" stop-color="#6E4512"/></linearGradient>' +
+      '<filter id="' + p + 'grain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 .1  0 0 0 0 .05  0 0 0 0 0  0 0 0 1.7 -.66"/></filter>' +
+      '<filter id="' + p + 'mott" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".02 .045" numOctaves="3" seed="3"/><feColorMatrix type="matrix" values="0 0 0 0 .16  0 0 0 0 .09  0 0 0 0 .02  0 0 0 1.8 -.7"/></filter>' +
+      '<filter id="' + p + 'verd" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".03 .07" numOctaves="3" seed="11"/><feColorMatrix type="matrix" values="0 0 0 0 .3  0 0 0 0 .56  0 0 0 0 .44  0 0 0 2 -.98"/></filter>' +
+      '<linearGradient id="' + p + 'pet" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".1"/><stop offset="1" stop-color="#FFF1BD" stop-opacity=".9"/></linearGradient>' +
+      '<radialGradient id="' + p + 'sh" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#28100A" stop-opacity=".42"/><stop offset=".6" stop-color="#28100A" stop-opacity=".16"/><stop offset="1" stop-color="#28100A" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="' + p + 'dgl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFB45A" stop-opacity=".75"/><stop offset="1" stop-color="#FFB45A" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="' + p + 'refl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#F7B6C8" stop-opacity=".45"/><stop offset="1" stop-color="#F7B6C8" stop-opacity="0"/></radialGradient>' +
+      '</defs>';
+    o += '<ellipse cx="' + (CX + 6) + '" cy="232" rx="190" ry="16" fill="url(#' + p + 'sh)"/>';
+    // foot: a stepped pedestal. Seen from above only its front lip shows, so the base is a shallow curve, not an oval.
+    var foot = 'M154 200C152 210 142 219 128 227Q210 238 292 227C278 219 268 210 266 200Z';
+    o += '<path d="' + foot + '" fill="url(#' + p + 'brassH)" stroke="#5E3C12" stroke-width="1"/>';
+    o += '<clipPath id="' + p + 'foot"><path d="' + foot + '"/></clipPath><g clip-path="url(#' + p + 'foot)">';
+    // a knop with beads, then a flare of small petals pointing down
+    o += '<path d="M156 207Q210 217 264 207" fill="none" stroke="#3A2208" stroke-width="5.4" stroke-linecap="round"/><path d="M156 207Q210 217 264 207" fill="none" stroke="url(#' + p + 'brass)" stroke-width="4"/><path d="M156 206Q210 216 264 206" fill="none" stroke="#FFF1BD" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="0.1 4.6" opacity=".9"/>';
+    for (i = 0; i < 9; i++) {
+      var fx = CX + (i - 4) * 15.5, u = (fx - CX) / 70, fy = 215.5 + 4.4 * (1 - u * u);
+      o += emb('d="M-7.2 0C-7.6 6.4 -2.6 11.2 0 12.8C2.6 11.2 7.6 6.4 7.2 0Z"', 'translate(' + n(fx) + ' ' + n(fy) + ')');
+    }
+    o += '<rect x="120" y="196" width="180" height="44" fill="url(#' + p + 'pat)" opacity=".8"/><rect x="120" y="196" width="180" height="44" fill="url(#' + p + 'edge)" opacity=".7"/>';
+    o += '<path d="M128 227Q210 238 292 227" fill="none" stroke="#3A2208" stroke-width="3"/><path d="M130 225.2Q210 236 290 225.2" fill="none" stroke="#FFF1BD" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="0.1 4.4" opacity=".85"/>';
+    o += '</g>';
+    // the bowl
+    o += '<path d="' + body + '" fill="url(#' + p + 'brassH)" stroke="#5E3C12" stroke-width="1.1"/>';
+    o += '<g clip-path="url(#' + p + 'body)">';
+    o += '<rect x="0" y="90" width="420" height="130" fill="url(#' + p + 'brassV)" opacity=".34"/>';
+    // chased and raised work, lit from the upper left
+    function petalRow(y, cnt, L, W, off) {
+      var h = hw(y), ry = h * 38 / 188, list = [], j;
+      for (j = 0; j < cnt; j++) { var th = (j + 0.5 + off) / cnt * Math.PI; list.push({ th: th, d: Math.abs(Math.cos(th)) }); }
+      list.sort(function (u, v) { return v.d - u.d; }); // the side petals first, the front ones over them
+      list.forEach(function (q) {
+        var px = CX - Math.cos(q.th) * h, py = y + Math.sin(q.th) * ry, sx = Math.max(0.3, Math.sin(q.th)) * (h / 188 + 0.1);
+        var tf = 'translate(' + n(px) + ' ' + n(py) + ') rotate(' + n(-Math.cos(q.th) * 17) + ') scale(' + n(sx) + ' 1)';
+        o += emb('d="' + lp(L, W) + '"', tf);
+        o += emb('d="' + lp(L * 0.66, W * 0.56) + '"', tf + ' translate(0 -3)');
+        o += '<path d="M0 ' + n(-L * 0.08) + 'L0 ' + n(-L * 0.52) + '" transform="' + tf + '" stroke="rgba(24,9,0,.55)" stroke-width="1.1" stroke-linecap="round" fill="none"/><path d="M0 ' + n(-L * 0.08) + 'L0 ' + n(-L * 0.52) + '" transform="translate(-.5 -.5) ' + tf + '" stroke="#FFF1BD" stroke-width=".6" stroke-linecap="round" fill="none" opacity=".7"/>';
+      });
+    }
+    // the lip: a moulding, a row of beads, a moulding
+    o += ridge(bandArc(112), 2) + beadRow(bandArc(117), 3, 6.2) + ridge(bandArc(122), 2);
+    // a vine of rosettes and leaves
+    (function () {
+      var h = hw(130), ry = h * 38 / 188, cnt = 13, j, vine = 'M' + n(CX - h) + ' 130';
+      for (j = 0; j <= 80; j++) { var t2 = Math.PI * (1 - j / 80); vine += 'L' + n(CX + Math.cos(t2) * h) + ' ' + n(130 + Math.sin(t2) * ry + Math.sin(j * 0.64) * 2.6); }
+      o += ridge(vine, 1.6);
+      for (j = 0; j < cnt; j++) {
+        var th = (j + 0.5) / cnt * Math.PI, sx = Math.max(0.3, Math.sin(th)), px = CX - Math.cos(th) * h, py = 130 + Math.sin(th) * ry, tf = 'translate(' + n(px) + ' ' + n(py) + ') scale(' + n(sx) + ' 1)';
+        o += emb('d="M0 0C-9 -2 -13 4 -15 8C-8 8 -3 5 0 0Z"', tf) + emb('d="M0 0C9 -2 13 4 15 8C8 8 3 5 0 0Z"', tf);
+        for (var q = 0; q < 8; q++) o += emb('cx="0" cy="-3.6" rx="1.9" ry="3.4"', tf + ' rotate(' + q * 45 + ')', 'ellipse');
+        o += emb('cx="0" cy="0" r="1.9"', tf, 'circle');
+      }
+    })();
+    o += ridge(bandArc(139), 2.2);
+    // the belly: a row of lotus petals over a lower row that shows between them
+    petalRow(195, 11, 22, 16, 0.5);
+    petalRow(172, 11, 28, 21, 0);
+    o += ridge(bandArc(200), 2.2);
+    // antique finish: shaded edges and foot, blotchy tarnish, a faint green bloom, fine pitted grain
+    o += '<rect x="0" y="90" width="420" height="130" fill="url(#' + p + 'edge)"/><rect x="0" y="90" width="420" height="130" fill="url(#' + p + 'pat)"/>';
+    o += '<rect x="0" y="90" width="420" height="130" filter="url(#' + p + 'mott)" opacity=".34"/><rect x="0" y="90" width="420" height="130" filter="url(#' + p + 'verd)" opacity=".3"/><rect x="0" y="90" width="420" height="130" filter="url(#' + p + 'grain)" opacity=".26"/>';
+    o += '<path d="M54 128C60 160 80 186 118 198" fill="none" stroke="#FFF3BF" stroke-width="2.6" stroke-linecap="round" opacity=".16"/>';
+    o += '</g>';
+    // the rim: a broad flat lip with a bead edge, the dark inside wall, then the water
+    o += '<ellipse cx="' + CX + '" cy="100" rx="190" ry="39" fill="url(#' + p + 'brass)" stroke="#5E3C12" stroke-width="1.2"/>';
+    o += beadRow(ellPath(181, 35), 2.8, 7.4) + ridge(ellPath(188, 38), 1.4);
+    o += '<ellipse cx="' + CX + '" cy="100" rx="173" ry="31.5" fill="url(#' + p + 'wall)" stroke="#3A2208" stroke-width="1"/>';
+    o += '<ellipse cx="' + CX + '" cy="106" rx="166" ry="26" fill="url(#' + p + 'wat)"/>';
+    o += '<g clip-path="url(#' + p + 'wclip)">';
+    for (i = 0; i < 18; i++) o += '<path d="M' + n(CX - 150 + r() * 300) + ' ' + n(94 + r() * 24) + 'h' + n(10 + r() * 26) + '" stroke="#A9E6D8" stroke-width=".9" stroke-linecap="round" opacity="' + n(0.12 + r() * 0.2) + '"/>';
+    o += '<ellipse cx="' + (CX - 20) + '" cy="92" rx="110" ry="8" fill="#fff" opacity=".07"/>';
+    o += '</g>';
+    // everything afloat is drawn unclipped, so lily petals and flames can rise over the far edge of the bowl
+    var items = [];
+    [[96, 112, .6], [330, 112, .55], [214, 100, .5]].forEach(function (q) { items.push({ y: q[1] - 2, f: { d: 10, dx: 3, dy: 1, r: 1 }, s: '<g class="pad" style="animation-duration:' + n(4 + r() * 2) + 's"><ellipse cx="' + q[0] + '" cy="' + q[1] + '" rx="' + n(30 * q[2] + 8) + '" ry="' + n(8 * q[2] + 2) + '" fill="url(#' + p + 'pad)"/><path d="M' + q[0] + ' ' + q[1] + 'L' + (q[0] + 22) + ' ' + (q[1] - 2) + '" stroke="#0F2D24" stroke-width=".9" opacity=".5"/></g>' }); });
+    [[92, 107, .62], [146, 99, .8], [200, 112, .46], [238, 103, .56], [290, 99, .68], [334, 108, .5], [118, 115, .42]].forEach(function (q, li) {
+      items.push({ y: q[1], f: { d: 8.5, dx: 3.2, dy: 1.1, r: 1.3 }, s: '<ellipse cx="' + q[0] + '" cy="' + (q[1] + 3) + '" rx="' + n(56 * q[2] + 10) + '" ry="' + n(8 * q[2] + 2) + '" fill="url(#' + p + 'refl)"/><ellipse class="ripple" style="animation-delay:-' + n(li * 1.3) + 's" cx="' + q[0] + '" cy="' + (q[1] + 3) + '" rx="' + n(36 * q[2] + 8) + '" ry="' + n(6 * q[2] + 1.5) + '" fill="none" stroke="#C6F2E6" stroke-width=".7" opacity=".55"/>' + waterLily(p, q[0], q[1], q[2]) });
+    });
+    [[58, 107, .27, 0.2], [114, 113, .31, 1.1], [172, 109, .26, 1.8], [196, 119, .34, .7], [232, 114, .28, 2.3], [268, 113, .34, .4], [304, 107, .27, 1.5], [338, 112, .26, 2.0], [250, 97, .24, 1.3], [312, 119, .3, .9], [146, 119, .26, 2.6]].forEach(function (d, di) {
+      var dx = d[0], dy = d[1], sc = d[2];
+      items.push({ y: dy + 6, f: { d: 6.5, dx: 5.5, dy: 1.5, r: 2.8 }, s: '<ellipse cx="' + n(dx + 28 * sc) + '" cy="' + (dy + 4) + '" rx="' + n(60 * sc) + '" ry="' + n(10 * sc) + '" fill="url(#' + p + 'dgl)"/><ellipse class="ripple" style="animation-delay:-' + n(di * 1.1) + 's" cx="' + n(dx + 28 * sc) + '" cy="' + (dy + 6) + '" rx="' + n(52 * sc) + '" ry="' + n(8 * sc) + '" fill="none" stroke="#C6F2E6" stroke-width=".7" opacity=".6"/>' + diya(p, dx, dy - 16 * sc * 2.1, sc, d[3]) });
+    });
+    for (i = 0; i < 9; i++) { var px = CX - 140 + r() * 280, py = 96 + r() * 22; items.push({ y: py, f: { d: 9, dx: 6, dy: 1.6, r: 14 }, s: '<ellipse cx="' + n(px) + '" cy="' + n(py) + '" rx="' + n(3 + r() * 2) + '" ry="1.6" transform="rotate(' + n(r() * 40 - 20) + ' ' + n(px) + ' ' + n(py) + ')" fill="' + (i % 2 ? '#E9892B' : '#F4B24A') + '"/>' }); }
+    items.sort(function (a, b) { return a.y - b.y; });
+    items.forEach(function (it, ii) {
+      if (!it.f) { o += it.s; return; }
+      var f = it.f; // lilies and lamps drift on their own slow clocks
+      o += '<g class="flt" style="--d:' + n(f.d + (ii % 4) * 1.3) + 's;--dx:' + f.dx + 'px;--dy:' + f.dy + 'px;--r:' + f.r + 'deg;animation-delay:-' + n((ii * 2.37) % 9) + 's">' + it.s + '</g>';
+    });
+    // the near lip covers the water's front edge and catches the light
+    o += '<path d="M44 114A173 31.5 0 0 0 376 114" fill="none" stroke="#FFF3BF" stroke-width="1.4" opacity=".55" stroke-linecap="round" transform="translate(0 -4)"/>';
+    return o + '</svg>';
+  }
+
+  /* ---------- a hand holding a lotus bud, drawn to sit behind the welcome.
+     After the sketch: a fist closed round the stem, the thumb across the top, four curled fingers in front of the stem,
+     the forearm falling away to the lower left. Alta is on the fingertips only. ---------- */
   /* ---------- ornamental border for text panels (CSS border-image), miniature-folio style ---------- */
   function folioURI() {
     function flower(cx, cy, r, col, ctr) {
@@ -1006,7 +1482,7 @@
 
   return {
     hero: hero, peacockCut: peacockCut, jaaliCut: jaaliCut, lotusSway: lotusSway, pond: pond, dresserCut: dresserCut, rababCut: rababCut, ghatStrip: ghatStrip, skyline: skyline, tileEarrings: tileEarrings, tileKeychains: tileKeychains,
-    craftScene: craftScene, divider: divider, mark: mark, diyaRow: diyaRow, jaliURI: jaliURI, folioURI: folioURI,
+    craftScene: craftScene, divider: divider, mark: mark, diyaRow: diyaRow, urli: urli, jaliURI: jaliURI, folioURI: folioURI,
     common: common, lotus: lotus, swan: swan, peacock: peacock, dresser: dresser, boat: boat, sandook: sandook, rabab: rabab, diya: diya, ARCH: ARCH
   };
 });
