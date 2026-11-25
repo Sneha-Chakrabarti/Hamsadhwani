@@ -62,7 +62,7 @@
     if(list.length === 0){
       const empty = document.createElement("div");
       empty.className = "empty-msg";
-      empty.textContent = "Nothing here yet. Check back soon.";
+      empty.textContent = "Nothing here yet. The next pieces are still on the worktable.";
       grid.appendChild(empty);
       return;
     }
@@ -169,7 +169,7 @@
     if(ids.length === 0){
       const empty = document.createElement("div");
       empty.className = "empty-msg";
-      empty.textContent = "Your cart is empty.";
+      empty.textContent = "Your cart is empty. Nothing has been chosen yet.";
       body.appendChild(empty);
     } else {
       ids.forEach(id=>{

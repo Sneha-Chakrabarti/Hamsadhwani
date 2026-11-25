@@ -96,12 +96,17 @@
     }, { passive: true });
   }
 
-  // ---- marquee text ----
-  var words = ["Shringar", "Lamplight", "Brass", "Lotus", "Swan", "Moonlight", "Handmade"];
+  // ---- marquee: aroh and avaroh of raga Hamsadhwani ----
+  var MI = {"swan": "<svg class=\"mi\" viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 18.500C5.500 20.800 9 21.800 14 21.800c5 0 8-2 8-4.300 0-1-1-1.500-2.500-1C17 17.200 15 16 12 15 9 14 6 13 4.500 11.500 4 14 3.500 16 3 18.500z\"/><path d=\"M9 17.500c2 1 5 1 7.500 0\"/><path d=\"M19 16c2.800-2 3-5 .2-6.400-2.600-1.300-2.200-4.600.2-5.100 1.200-.2 2.200.4 2.500 1.400\"/><path d=\"M21.700 5.800l2.500.9-2.600 1\"/></svg>", "lotus": "<svg class=\"mi\" viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14 5c3 3.2 3.4 7 0 11.5C10.6 12 11 8.2 14 5z\"/><path d=\"M14 16.5C13 12.5 9 9.5 4.5 10.5c.2 4 3.6 7 9.5 6z\"/><path d=\"M14 16.5c1-4 5-7 9.500-6-.2 4-3.600 7-9.500 6z\"/><path d=\"M5 21c5 2 13 2 18 0\"/></svg>", "banjo": "<svg class=\"mi\" viewBox=\"0 0 28 28\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"9.500\" cy=\"18.500\" r=\"6\"/><circle cx=\"9.500\" cy=\"18.500\" r=\"2.800\"/><path d=\"M13.800 14.200L23.500 4.500\"/><path d=\"M15.200 16l9-9\"/><path d=\"M22.500 3l3 3\"/></svg>"};
+  var aroh = "सा रे ग प नि सां";
+  var avaroh = "सां नि प ग रे सा";
+  var sep = '<span class="m-sep" aria-hidden="true">||</span>';
+  var unit =
+    '<span class="m-ic">' + MI.swan + '</span><span class="m-sw">' + aroh + '</span><span class="m-ic">' + MI.lotus + '</span>' + sep +
+    '<span class="m-ic">' + MI.banjo + '</span><span class="m-sw">' + avaroh + '</span><span class="m-ic">' + MI.lotus + '</span>' + sep;
   var track = document.getElementById("marqueeTrack");
   if (track) {
-    var one = words.map(function (w) { return "<span>" + w + "</span>"; }).join("");
-    track.innerHTML = one + one + one + one;
+    track.innerHTML = unit + unit + unit + unit + unit + unit;
   }
 
   // ---- header + announcement ----
