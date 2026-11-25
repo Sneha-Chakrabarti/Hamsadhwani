@@ -370,6 +370,7 @@ table.admin-table tr:last-child td{border-bottom:none;}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;}
+  .glint,.glit{opacity:.5!important;transform:scale(.6)!important;}
   .js .reveal{opacity:1;transform:none;}
   html{scroll-behavior:auto;}
 }
@@ -408,7 +409,7 @@ table.admin-table tr:last-child td{border-bottom:none;}
 
 /* ---------- a more hand-made page: paper grain, colour blocks, scalloped edges, large lettering ---------- */
 :root{--haldi:#EBC15F;--rose:#EBC9BF;}
-body::after{content:"";position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:.55;mix-blend-mode:multiply;
+body::after{content:"";position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:.78;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 .38  0 0 0 0 .26  0 0 0 0 .14  0 0 0 .5 -.12'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");}
 #collections>.wrap,#policy>.wrap,#shop>.wrap{position:relative;z-index:1;}
 #collections{background-color:var(--haldi);background-image:var(--jali-ochre);background-size:56px 56px;overflow:visible;}
@@ -434,3 +435,38 @@ body::after{content:"";position:fixed;inset:0;z-index:9990;pointer-events:none;o
 #collections .sec-text h2 em{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'><path d='M2 6C30 2 50 9 80 5S140 3 198 6' fill='none' stroke='%235A1424' stroke-width='2.2' stroke-linecap='round'/></svg>");}
 #collections,#shop,#policy{position:relative;overflow-x:clip;}
 html,body{overflow-x:clip;}
+
+/* ---------- sparkle on the jewels ---------- */
+.glint{transform-box:fill-box;transform-origin:50% 50%;opacity:0;animation:twinkle var(--t,4.4s) ease-in-out infinite;animation-delay:var(--d,0s);}
+@keyframes twinkle{0%,34%,100%{opacity:0;transform:scale(.15) rotate(0deg);}8%{opacity:1;transform:scale(1) rotate(22deg);}15%{opacity:.85;transform:scale(.6) rotate(48deg);}24%{opacity:0;transform:scale(.2) rotate(70deg);}}
+.craft-svg{overflow:visible;}
+
+/* ---------- lamp light and glitter ---------- */
+.lpool{animation:lflick 3.1s ease-in-out infinite;}
+.lpool{transform-box:fill-box;transform-origin:50% 50%;animation-duration:2.7s;}
+@keyframes lflick{0%,100%{opacity:1;}30%{opacity:.76;}55%{opacity:.95;}75%{opacity:.68;}}
+.glit{transform-box:fill-box;transform-origin:50% 50%;opacity:0;animation-delay:var(--d,0s);animation-duration:var(--t,2.4s);animation-iteration-count:infinite;animation-timing-function:ease-in-out;}
+.glit{animation-name:glitter;}
+@keyframes glitter{0%,100%{opacity:0;transform:scale(.2) rotate(0deg);}12%{opacity:1;transform:scale(1) rotate(35deg);}24%{opacity:.7;transform:scale(.55) rotate(70deg);}40%{opacity:0;transform:scale(.2) rotate(95deg);}}
+.glit.flare,.glint.flare{animation:flare .85s ease-out 1;}
+@keyframes flare{0%{opacity:1;transform:scale(2.3) rotate(0deg);}100%{opacity:0;transform:scale(.3) rotate(110deg);}}
+
+.gfx{opacity:0;animation:gfx var(--t,3s) ease-in-out infinite;animation-delay:var(--d,0s);}
+@keyframes gfx{0%,58%,100%{opacity:0;}66%{opacity:.85;}74%{opacity:.1;}82%{opacity:.55;}92%{opacity:0;}}
+@media (prefers-reduced-motion:reduce){.gfx{animation:none!important;opacity:.18!important;}}
+
+/* ---------- the urli at the end of the shop ---------- */
+.urli-fig{margin:clamp(34px,6vw,70px) auto 0;max-width:820px;text-align:center;}
+.urli-row{display:flex;align-items:center;gap:clamp(12px,3vw,34px);}
+.urli-row i{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,134,47,.7));position:relative;}
+.urli-row i:last-child{background:linear-gradient(270deg,transparent,rgba(184,134,47,.7));}
+.urli-row i::after{content:"";position:absolute;top:-3px;width:7px;height:7px;background:var(--brass);transform:rotate(45deg);right:0;}
+.urli-row i:last-child::after{right:auto;left:0;}
+.urli{flex:0 1 460px;line-height:0;}
+.urli-svg{display:block;width:100%;height:auto;filter:drop-shadow(0 10px 12px rgba(90,20,36,.16));}
+.urli-fig figcaption{margin-top:14px;font-family:var(--display);font-style:italic;color:var(--muted);font-size:1.05rem;}
+@media (max-width:560px){.urli-row i{display:none;}}
+.flt{transform-box:fill-box;transform-origin:50% 70%;animation:flt var(--d,8s) ease-in-out infinite alternate;}
+@keyframes flt{0%{transform:translate(calc(var(--dx,3px) * -1),calc(var(--dy,1px) * -1)) rotate(calc(var(--r,1deg) * -1));}100%{transform:translate(var(--dx,3px),var(--dy,1px)) rotate(var(--r,1deg));}}
+.urli-svg.off *{animation-play-state:paused!important;}
+
