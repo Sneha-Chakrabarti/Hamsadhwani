@@ -1,6 +1,6 @@
 (function(){
   let PRODUCTS = [];
-  let activeCat = "all";
+  let activeCat = "all"; // "all" or a collection id
   let cart = {}; // {productId: qty}
 
   // ---------- cart persistence (per-browser only) ----------
@@ -58,7 +58,8 @@
   function renderGrid(){
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
-    const list = activeCat === "all" ? PRODUCTS : PRODUCTS.filter(p=>p.category===activeCat);
+    const list = activeCat === "all" ? PRODUCTS : PRODUCTS.filter(p=>p.collection===activeCat);
+    renderCollNote();
     if(list.length === 0){
       const empty = document.createElement("div");
       empty.className = "empty-msg";
@@ -108,7 +109,9 @@
 
       const tag = document.createElement("div");
       tag.className = "cat-tag";
-      tag.textContent = p.category;
+      const coll = (typeof COLLECTIONS !== "undefined") ? COLLECTIONS.find(c=>c.id===p.collection) : null;
+      const typeName = (typeof PIECE_TYPES !== "undefined" && p.piece_type) ? PIECE_TYPES[p.piece_type] : "";
+      tag.textContent = [coll ? coll.name : p.category, typeName].filter(Boolean).join(" · ");
       body.appendChild(tag);
 
       const h3 = document.createElement("h3");
@@ -145,6 +148,18 @@
       grid.appendChild(card);
       if(window.UI) window.UI.observe(card); else card.classList.add("in");
     });
+  }
+
+  function renderCollNote(){
+    const box = document.getElementById("collNote");
+    if(!box) return;
+    box.innerHTML = "";
+    const c = (typeof COLLECTIONS !== "undefined") ? COLLECTIONS.find(x=>x.id===activeCat) : null;
+    if(!c) return;
+    const h = document.createElement("h3"); h.textContent = c.name;
+    const m = document.createElement("div"); m.className = "coll-motif"; m.textContent = c.motif;
+    const p = document.createElement("p"); p.textContent = c.poem;
+    box.appendChild(h); box.appendChild(m); box.appendChild(p);
   }
 
   function renderCartBadge(){

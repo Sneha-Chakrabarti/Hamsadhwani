@@ -4,14 +4,13 @@
 const SAMPLE_MODE = true;
 
 const SAMPLE_PRODUCTS = [
-  { id: "sample-1",  category: "earrings",  name: "Kamal Jhumka",        price: 349, available: true,  description: "Lotus-inspired drops with a beaded fringe." },
-  { id: "sample-2",  category: "earrings",  name: "Hamsa Chandbali",     price: 429, available: true,  description: "A crescent drop with tiny pearl beads." },
-  { id: "sample-3",  category: "earrings",  name: "Padma Stud",          price: 199, available: true,  description: "Small everyday studs, finished by hand." },
-  { id: "sample-4",  category: "earrings",  name: "Moti Drop",           price: 299, available: false, description: "Slim drops with a single pearl." },
-  { id: "sample-5",  category: "earrings",  name: "Rangeela Tassel",     price: 379, available: true,  description: "Bright thread tassels on a brass-tone hook." },
-  { id: "sample-6",  category: "earrings",  name: "Mala Hoop",           price: 399, available: true,  description: "Light hoops strung with seed beads." },
-  { id: "sample-7",  category: "keychains", name: "Ghungroo Keychain",   price: 179, available: true,  description: "A cluster of small bells on a sturdy ring." },
-  { id: "sample-8",  category: "keychains", name: "Padma Charm Keychain",price: 199, available: true,  description: "A lotus charm with beaded detail." },
-  { id: "sample-9",  category: "keychains", name: "Hamsa Swan Keychain", price: 229, available: true,  description: "A swan charm in soft pearl tones." },
-  { id: "sample-10", category: "keychains", name: "Dori Tassel Keychain",price: 149, available: true,  description: "A hand-wound thread tassel with a bead cap." }
+  { id: "sample-1",  category: "earrings", collection: "celeste",   piece_type: "stud",    name: "Starry Stud",      price: 249, available: true,  description: "Small clay studs painted with a swirling night sky." },
+  { id: "sample-2",  category: "earrings", collection: "celeste",   piece_type: "jhumka",  name: "Moonrise Jhumka",  price: 399, available: true,  description: "A painted clay jhumka in deep indigo with golden stars." },
+  { id: "sample-3",  category: "earrings", collection: "celeste",   piece_type: "dangler", name: "Swirl Dangler",    price: 329, available: true,  description: "A fishhook dangler with a hand-painted crescent moon." },
+  { id: "sample-4",  category: "earrings", collection: "silk-road", piece_type: "stud",    name: "Cobalt Stud",      price: 249, available: true,  description: "Blue and white clay studs with a fine gold edge." },
+  { id: "sample-5",  category: "earrings", collection: "silk-road", piece_type: "jhumka",  name: "Porcelain Jhumka", price: 399, available: false, description: "A blue china motif painted on a small clay jhumka." },
+  { id: "sample-6",  category: "earrings", collection: "silk-road", piece_type: "dangler", name: "Caravan Dangler",  price: 329, available: true,  description: "A long clay dangler in cobalt with a golden accent." },
+  { id: "sample-7",  category: "earrings", collection: "flora",     piece_type: "stud",    name: "Gul Stud",         price: 249, available: true,  description: "Tiny painted clay blossoms on a stud post." },
+  { id: "sample-8",  category: "earrings", collection: "flora",     piece_type: "jhumka",  name: "Bagh Jhumka",      price: 399, available: true,  description: "A clay jhumka painted with a slender flowering stem." },
+  { id: "sample-9",  category: "earrings", collection: "flora",     piece_type: "dangler", name: "Lata Dangler",     price: 329, available: true,  description: "A painted floral dangler, with a small pearl on some pieces." }
 ];

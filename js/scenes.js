@@ -1480,8 +1480,102 @@
     return "url(\"data:image/svg+xml;utf8," + encodeURIComponent(svg).replace(/%20/g, " ") + "\")";
   }
 
+  /* ---------- collection tiles: flat motif panels (the motifs, not the jewellery) ---------- */
+  var TILE_HEAD = '<svg class="tile-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">';
+
+  function spiralPath(cx, cy, r0, r1, turns, start) {
+    var steps = Math.round(turns * 28), d = "";
+    for (var i = 0; i <= steps; i++) {
+      var t = i / steps, a = start + t * turns * Math.PI * 2, r = r0 + (r1 - r0) * t;
+      d += (i ? "L" : "M") + n(cx + r * Math.cos(a)) + " " + n(cy + r * Math.sin(a));
+    }
+    return d;
+  }
+
+  /* Celeste: a swirling night sky, gold stars, a crescent moon */
+  function tileCeleste() {
+    var p = "tc_", o = TILE_HEAD + '<defs>' +
+      '<linearGradient id="' + p + 'bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1B45"/><stop offset=".6" stop-color="#18337A"/><stop offset="1" stop-color="#244A94"/></linearGradient>' +
+      '<radialGradient id="' + p + 'h"><stop offset="0" stop-color="#F7DC70" stop-opacity=".6"/><stop offset="1" stop-color="#F7DC70" stop-opacity="0"/></radialGradient><mask id="' + p + 'mm"><rect x="250" y="50" width="140" height="140" fill="#fff"/><circle cx="330" cy="110" r="27" fill="#000"/></mask></defs>';
+    o += '<rect width="400" height="480" fill="url(#' + p + 'bg)"/>';
+    // flowing bands
+    var bands = [["#2C57AE", 16, -30, 330], ["#4A80D2", 12, -10, 300], ["#7FADE6", 8, 10, 270], ["#2C57AE", 14, 34, 360], ["#4A80D2", 10, 52, 335], ["#9CC3F0", 6, 70, 305]];
+    bands.forEach(function (b, i) {
+      var y = b[3] + b[2] * 0.2;
+      o += '<path d="M-30 ' + y + 'C60 ' + (y - 70) + ' 130 ' + (y + 50) + ' 215 ' + (y - 10) + 'S350 ' + (y - 80) + ' 430 ' + (y - 20) + '" fill="none" stroke="' + b[0] + '" stroke-width="' + b[1] + '" stroke-linecap="round" stroke-dasharray="' + (30 + i * 4) + ' 7" opacity=".9"/>';
+    });
+    // two great swirls
+    [[110, 150, 8, 56, 2.6, 0.4], [285, 205, 6, 46, 2.2, 2.2]].forEach(function (s, k) {
+      o += '<path d="' + spiralPath(s[0], s[1], s[2], s[3], s[4], s[5]) + '" fill="none" stroke="#9CC3F0" stroke-width="7" stroke-linecap="round" stroke-dasharray="22 8" opacity=".8"/>';
+      o += '<path d="' + spiralPath(s[0], s[1], s[2] + 6, s[3] + 8, s[4], s[5] + 0.2) + '" fill="none" stroke="#4A80D2" stroke-width="5" stroke-linecap="round" stroke-dasharray="16 9" opacity=".8"/>';
+    });
+    // stars
+    [[110, 150, 7], [285, 205, 6], [200, 90, 5], [48, 60, 4], [352, 300, 5], [60, 330, 4], [330, 70, 4]].forEach(function (s) {
+      o += '<circle cx="' + s[0] + '" cy="' + s[1] + '" r="' + s[2] * 4 + '" fill="url(#' + p + 'h)"/><circle cx="' + s[0] + '" cy="' + s[1] + '" r="' + s[2] + '" fill="#F7DC70"/>';
+      for (var a = 0; a < 8; a++) { var t = a * Math.PI / 4, r1 = s[2] * 1.5, r2 = s[2] * (a % 2 ? 2.1 : 2.8); o += '<path d="M' + n(s[0] + r1 * Math.cos(t)) + ' ' + n(s[1] + r1 * Math.sin(t)) + 'L' + n(s[0] + r2 * Math.cos(t)) + ' ' + n(s[1] + r2 * Math.sin(t)) + '" stroke="#F7DC70" stroke-width="1.6" stroke-linecap="round"/>'; }
+    });
+    // crescent moon
+    o += '<circle cx="318" cy="118" r="52" fill="url(#' + p + 'h)"/><circle cx="318" cy="118" r="30" fill="#F4D96B" mask="url(#' + p + 'mm)"/>';
+    // dark hills
+    o += '<path d="M0 480V420C60 400 110 410 170 428C240 448 310 410 400 424V480Z" fill="#0B1534"/>';
+    return o + '</svg>';
+  }
+
+  /* Silk Road: blue and white porcelain medallion with gold accents */
+  function tileSilkRoad() {
+    var p = "ts_", B = "#1E4A9E", B2 = "#6C95D6", IV = "#F3EEE3", G = "#D4A640", o = TILE_HEAD;
+    o += '<rect width="400" height="480" fill="' + IV + '"/>';
+    // faint dot ground
+    for (var y = 20; y < 480; y += 26) for (var x = (y / 26 % 2) * 13 + 10; x < 400; x += 26) o += '<circle cx="' + x + '" cy="' + y + '" r="1.3" fill="' + B + '" opacity=".16"/>';
+    o += '<rect x="14" y="14" width="372" height="452" fill="none" stroke="' + B + '" stroke-width="2"/><rect x="22" y="22" width="356" height="436" fill="none" stroke="' + G + '" stroke-width="1.2"/>';
+    // medallion
+    o += '<g transform="translate(200 226)">';
+    o += '<circle r="150" fill="none" stroke="' + B + '" stroke-width="3"/><circle r="141" fill="none" stroke="' + G + '" stroke-width="1.2"/><circle r="132" fill="none" stroke="' + B2 + '" stroke-width="1" stroke-dasharray="3 6"/>';
+    for (var i = 0; i < 12; i++) o += '<g transform="rotate(' + i * 30 + ')"><path d="M0 -58C14 -82 14 -112 0 -128C-14 -112 -14 -82 0 -58Z" fill="' + B + '"/><path d="M0 -70C6 -86 6 -104 0 -114C-6 -104 -6 -86 0 -70Z" fill="' + IV + '"/></g>';
+    for (var j = 0; j < 12; j++) o += '<g transform="rotate(' + (j * 30 + 15) + ')"><path d="M0 -26C10 -42 10 -62 0 -76C-10 -62 -10 -42 0 -26Z" fill="' + B2 + '" stroke="' + B + '" stroke-width="1.2"/></g>';
+    o += '<circle r="22" fill="' + IV + '" stroke="' + B + '" stroke-width="2.4"/><circle r="12" fill="' + G + '"/><circle r="5" fill="' + IV + '"/>';
+    o += '</g>';
+    // ruyi cloud scrolls at the corners
+    [[58, 58, 1, 1], [342, 58, -1, 1], [58, 394, 1, -1], [342, 394, -1, -1]].forEach(function (c) {
+      o += '<g transform="translate(' + c[0] + ' ' + c[1] + ') scale(' + c[2] + ' ' + c[3] + ')"><path d="M0 0C14 -2 22 6 18 16C14 24 4 24 4 16C4 10 12 10 12 15" fill="none" stroke="' + B + '" stroke-width="2.4" stroke-linecap="round"/><path d="M18 2C30 -2 40 4 40 12" fill="none" stroke="' + G + '" stroke-width="1.6" stroke-linecap="round"/></g>';
+    });
+    // waves along the foot
+    for (var w = 0; w < 5; w++) { var wy = 424 + w * 5; o += '<path d="M30 ' + wy + 'q10 -12 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0" transform="translate(' + (w % 2 ? 0 : 10) + ' 0)" fill="none" stroke="' + (w === 2 ? G : B) + '" stroke-width="' + (w === 2 ? 1.2 : 1.6) + '" opacity="' + (0.9 - w * 0.12) + '"/>'; }
+    return o + '</svg>';
+  }
+
+  /* Flora: a flowering plant in a pointed arch, drawn the way miniature painters drew a garden */
+  function tileFlora() {
+    var p = "tf_", o = TILE_HEAD + '<defs>' + common(p) +
+      '<clipPath id="' + p + 'c"><path d="' + NICHE + '"/></clipPath>' +
+      '<pattern id="' + p + 'jl" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20 3C25 11 31 14 37 20C31 26 25 29 20 37C15 29 9 26 3 20C9 14 15 11 20 3Z" fill="none" stroke="#E3B04B" stroke-width="1" opacity=".4"/></pattern></defs>';
+    o += '<rect width="400" height="480" fill="#1E5946"/><rect width="400" height="480" fill="url(#' + p + 'jl)"/>';
+    o += '<path d="' + NICHE + '" fill="#F6EBD3"/><g clip-path="url(#' + p + 'c)">';
+    var LEAF = "M0 0C16 -12 34 -8 46 6C30 16 12 12 0 0Z";
+    function leaf(x, y, rot, flip, s) { return '<g transform="translate(' + x + ' ' + y + ') rotate(' + rot + ') scale(' + (flip ? -s : s) + ' ' + s + ')"><path d="' + LEAF + '" fill="#2F7A55" stroke="#1B4A34" stroke-width="1"/><path d="M2 1C18 -2 32 0 42 6" fill="none" stroke="#9BD3B0" stroke-width="1" opacity=".8"/></g>'; }
+    function tulip(x, y, s, c1, c2) {
+      return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')">' +
+        '<path d="M0 0C-16 -6 -22 -30 -14 -52C-6 -40 -2 -24 0 0Z" fill="' + c2 + '" stroke="#5E1A2C" stroke-width="1"/>' +
+        '<path d="M0 0C16 -6 22 -30 14 -52C6 -40 2 -24 0 0Z" fill="' + c2 + '" stroke="#5E1A2C" stroke-width="1"/>' +
+        '<path d="M0 0C-12 -10 -12 -40 0 -62C12 -40 12 -10 0 0Z" fill="' + c1 + '" stroke="#5E1A2C" stroke-width="1"/>' +
+        '<path d="M0 -6C-3 -22 -3 -38 0 -52" fill="none" stroke="#FFD9DF" stroke-width="1" opacity=".7"/></g>';
+    }
+    // stems
+    o += '<g fill="none" stroke="#2A6B49" stroke-width="3.2" stroke-linecap="round"><path d="M200 452C196 400 206 330 200 232"/><path d="M200 380C176 360 150 330 140 282"/><path d="M200 380C226 360 252 330 262 282"/><path d="M198 430C170 420 128 400 112 350"/><path d="M198 430C228 420 272 400 290 350"/></g>';
+    // leaves
+    o += leaf(199, 418, -32, true, 0.9) + leaf(201, 400, -32, false, 0.9) + leaf(199, 340, -40, true, 0.8) + leaf(201, 322, -40, false, 0.8) + leaf(198, 276, -50, true, 0.65) + leaf(202, 262, -50, false, 0.65);
+    // blooms
+    o += tulip(200, 232, 1.15, "#D9577A", "#B3203A") + tulip(140, 284, 0.85, "#E7788F", "#C23B55") + tulip(262, 284, 0.85, "#E7788F", "#C23B55") + tulip(112, 352, 0.6, "#F0A3B4", "#D45A74") + tulip(290, 352, 0.6, "#F0A3B4", "#D45A74");
+    // gold dots as little stamens and seeds
+    [[200, 158], [166, 226], [234, 226], [124, 226], [276, 226], [200, 118]].forEach(function (d) { o += '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="3" fill="#E3B04B"/>'; });
+    // ground
+    o += '<path d="M56 470C100 452 150 448 200 452C250 448 300 452 344 470Z" fill="#2F7A55" opacity=".85"/></g>';
+    o += '<path d="' + NICHE + '" fill="none" stroke="url(#' + p + 'brass)" stroke-width="6"/></svg>';
+    return o;
+  }
+
   return {
-    hero: hero, peacockCut: peacockCut, jaaliCut: jaaliCut, lotusSway: lotusSway, pond: pond, dresserCut: dresserCut, rababCut: rababCut, ghatStrip: ghatStrip, skyline: skyline, tileEarrings: tileEarrings, tileKeychains: tileKeychains,
+    hero: hero, peacockCut: peacockCut, jaaliCut: jaaliCut, lotusSway: lotusSway, pond: pond, dresserCut: dresserCut, rababCut: rababCut, ghatStrip: ghatStrip, skyline: skyline, tileEarrings: tileEarrings, tileKeychains: tileKeychains, tileCeleste: tileCeleste, tileSilkRoad: tileSilkRoad, tileFlora: tileFlora,
     craftScene: craftScene, divider: divider, mark: mark, diyaRow: diyaRow, urli: urli, jaliURI: jaliURI, folioURI: folioURI,
     common: common, lotus: lotus, swan: swan, peacock: peacock, dresser: dresser, boat: boat, sandook: sandook, rabab: rabab, diya: diya, ARCH: ARCH
   };

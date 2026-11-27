@@ -69,7 +69,7 @@
       const tr = document.createElement("tr");
 
       const nameTd = document.createElement("td"); nameTd.textContent = p.name; tr.appendChild(nameTd);
-      const catTd = document.createElement("td"); catTd.textContent = p.category; tr.appendChild(catTd);
+      const catTd = document.createElement("td"); catTd.textContent = [p.category, p.collection, p.piece_type].filter(Boolean).join(" · "); tr.appendChild(catTd);
       const priceTd = document.createElement("td"); priceTd.textContent = fmt(p.price); tr.appendChild(priceTd);
 
       const statusTd = document.createElement("td");
@@ -87,7 +87,7 @@
         img.style.objectFit = "cover"; img.style.borderRadius = "6px";
         photoTd.appendChild(img);
       } else {
-        photoTd.textContent = "—";
+        photoTd.textContent = "None";
       }
       tr.appendChild(photoTd);
 
@@ -131,6 +131,8 @@
     document.getElementById("editingProductId").value = p.id;
     document.getElementById("pName").value = p.name;
     document.getElementById("pCategory").value = p.category;
+    document.getElementById("pCollection").value = p.collection || "";
+    document.getElementById("pType").value = p.piece_type || "";
     document.getElementById("pPrice").value = p.price;
     document.getElementById("pAvailable").value = String(p.available);
     document.getElementById("pDescription").value = p.description || "";
@@ -145,6 +147,8 @@
     document.getElementById("editingProductId").value = "";
     document.getElementById("pName").value = "";
     document.getElementById("pCategory").value = "earrings";
+    document.getElementById("pCollection").value = "";
+    document.getElementById("pType").value = "";
     document.getElementById("pPrice").value = "";
     document.getElementById("pAvailable").value = "true";
     document.getElementById("pDescription").value = "";
@@ -184,6 +188,8 @@
     const id = document.getElementById("editingProductId").value;
     const name = document.getElementById("pName").value.trim();
     const category = document.getElementById("pCategory").value;
+    const collection = document.getElementById("pCollection").value || null;
+    const piece_type = document.getElementById("pType").value || null;
     const price = parseFloat(document.getElementById("pPrice").value);
     const available = document.getElementById("pAvailable").value === "true";
     const description = document.getElementById("pDescription").value.trim();
@@ -202,7 +208,7 @@
       if(selectedImageFile){
         imageUrl = await uploadImageIfAny();
       }
-      const payload = { name, category, price, available, description };
+      const payload = { name, category, collection, piece_type, price, available, description };
       if(imageUrl) payload.image_url = imageUrl;
 
       if(id){

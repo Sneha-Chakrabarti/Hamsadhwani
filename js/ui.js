@@ -8,7 +8,7 @@
   var S = window.Scenes;
   var map = {
     hero: S.hero, peacockCut: S.peacockCut, dresserCut: S.dresserCut, jaaliCut: S.jaaliCut, lotusSway: S.lotusSway, pond: S.pond, ghatStrip: S.ghatStrip, skyline: function () { return S.skyline({}); }, craftScene: S.craftScene,
-    tileEarrings: S.tileEarrings, tileKeychains: S.tileKeychains, mark: S.mark, diyaRow: S.diyaRow, urli: S.urli,
+    tileEarrings: S.tileEarrings, tileKeychains: S.tileKeychains, tileCeleste: S.tileCeleste, tileSilkRoad: S.tileSilkRoad, tileFlora: S.tileFlora, mark: S.mark, diyaRow: S.diyaRow, urli: S.urli,
     divider: function () { return S.divider("dv_"); }
   };
   var uid = 0;
@@ -176,7 +176,7 @@
     t.addEventListener("click", function () {
       var tab = document.querySelector('.tab[data-cat="' + t.getAttribute("data-cat-link") + '"]');
       if (tab) tab.click();
-      var shop = document.getElementById("shop");
+      var shop = document.getElementById("tabs");
       if (shop) shop.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
     });
   });
