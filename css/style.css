@@ -117,12 +117,12 @@ section[id]{scroll-margin-top:96px;}
 .divider .divider-svg{width:min(320px,70vw);height:auto;}
 
 /* ---------- collections ---------- */
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.4vw,32px);}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.4vw,32px);}
 .tile{position:relative;aspect-ratio:4/4.9;overflow:hidden;background:#12373A;cursor:pointer;display:block;text-decoration:none;color:#fff;padding:0;text-align:left;font:inherit;border-width:16px;border-image-width:16px;}
 .tile .tile-svg{position:absolute;top:0;left:0;width:100%;height:calc(100% - 104px);transition:transform 1.1s cubic-bezier(.2,.7,.2,1);}
 .tile:hover .tile-svg{transform:scale(1.04);}
 .tile-label{position:absolute;left:0;right:0;bottom:0;padding:16px 22px 16px;background:var(--paper);border-top:3px double var(--brass);z-index:2;color:var(--ink);}
-.tile-label h3{font-size:clamp(1.7rem,3vw,2.3rem);margin:0;color:var(--oxblood);line-height:1;}
+.tile-label h3{font-size:clamp(1.6rem,2.6vw,2.1rem);margin:0;color:var(--oxblood);line-height:1;}
 .tile-label small{display:block;margin-top:6px;font-size:.8rem;color:var(--muted);}
 .tile-label span{display:inline-block;margin-top:10px;font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);border-bottom:1px solid currentColor;padding-bottom:3px;}
 
@@ -469,3 +469,11 @@ html,body{overflow-x:clip;}
 @keyframes flt{0%{transform:translate(calc(var(--dx,3px) * -1),calc(var(--dy,1px) * -1)) rotate(calc(var(--r,1deg) * -1));}100%{transform:translate(var(--dx,3px),var(--dy,1px)) rotate(var(--r,1deg));}}
 .urli-svg.off *{animation-play-state:paused!important;}
 
+
+/* ---------- collection note above the shop grid ---------- */
+.coll-note{max-width:34em;margin:-6px auto 34px;text-align:center;}
+.coll-note:empty{display:none;}
+.coll-note h3{font-size:clamp(1.8rem,3.2vw,2.4rem);color:var(--oxblood);margin:0 0 4px;font-weight:500;}
+.coll-note .coll-motif{font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
+.coll-note p{color:var(--muted);line-height:1.8;margin:0;font-family:var(--display);font-style:italic;font-size:1.12rem;}
+#tabs{scroll-margin-top:120px;}
